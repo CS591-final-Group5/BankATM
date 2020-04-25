@@ -8,6 +8,11 @@ CAS CS591 P1: Object Oriented Software Principles and Design (in Java)
 -  Bryant Liriano <bliriano@bu.edu>
 
 
+**Compile and Run**
+cd src
+javac --module-path "/home/beven96/eclipse-workspace/BankATM/lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml Main.java  
+java --module-path "/home/beven96/eclipse-workspace/BankATM/lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml Main  
+
 **Class Design:**  
 
 Interface:  
