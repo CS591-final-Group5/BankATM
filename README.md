@@ -15,7 +15,11 @@ Interface:
 -  OpenOrCloseAccount
 -  DailyReport
 -  TradeStocks
+-  RequestLoans
 -  
+
+BankATM:  
+-  ***
 
 User:  
 -  UserBankManager
@@ -29,6 +33,8 @@ Currencies
 -  CurrencyUSD
 -  CurrencyCNY
 -  CurrencyRUB  
+
+Loans  
 
 GUIBankATM  
 -  GUIUserRegister
