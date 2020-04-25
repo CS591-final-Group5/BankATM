@@ -10,8 +10,17 @@ CAS CS591 P1: Object Oriented Software Principles and Design (in Java)
 
 **Compile and Run**
 cd src
+
+If you are using JDK 11 or higher:  
+(JavaFX has been removed)  
+
 javac --module-path "/home/beven96/eclipse-workspace/BankATM/lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml Main.java  
 java --module-path "/home/beven96/eclipse-workspace/BankATM/lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml Main  
+
+Or you could:  
+
+javac Main.java
+java Main
 
 **Class Design:**  
 
