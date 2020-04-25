@@ -21,7 +21,7 @@ Interface:
 BankATM:  
 -  ***
 
-User:  
+Users:  
 -  UserBankManager
 -  UserCustomers  
 
@@ -48,7 +48,9 @@ GUIBankATM
     -  GUIUserCustomersProfile
 -  GUI****
 -  GUIDailyReport
--  GUIStockMarket
+-  GUIStockMarket  
 
-
+Still not sure if we should seperate panel/frame/etc classes.  
+But I'll come up with a rough GUI first.  
+If there is a need, it should be easy to modify.  
 
