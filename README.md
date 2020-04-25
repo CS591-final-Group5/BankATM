@@ -37,6 +37,7 @@ Currencies
 Loans  
 
 GUIBankATM  
+-  GUIHomepage
 -  GUIUserRegister
     -  GUIUserBankManagerRegister
     -  GUIUserCustomersRegister
@@ -50,7 +51,7 @@ GUIBankATM
 -  GUIDailyReport
 -  GUIStockMarket  
 
-Still not sure if we should seperate panel/frame/etc classes.  
+Still not sure if we should seperate panel/frame/events/etc classes.  
 But I'll come up with a rough GUI first.  
 If there is a need, it should be easy to modify.  
 
