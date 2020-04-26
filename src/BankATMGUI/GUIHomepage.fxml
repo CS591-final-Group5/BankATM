@@ -39,7 +39,7 @@
             <Button fx:id="customerLogin" layoutX="339.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#clickCustomerLogin" prefHeight="50.0" prefWidth="200.0" text="Customer Login" />
             <Button fx:id="bankManagerLogin" layoutX="59.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#clickBankManagerLogin" prefHeight="50.0" prefWidth="200.0" text="Bank Manager Login" />
             <Button fx:id="exit" layoutX="199.0" layoutY="196.0" mnemonicParsing="false" onMouseClicked="#clickExit" prefHeight="50.0" prefWidth="200.0" text="Exit" />
-            <Button id="customerLogin" fx:id="register" layoutX="199.0" layoutY="117.0" mnemonicParsing="false" onMouseClicked="#clickRegister" prefHeight="50.0" prefWidth="200.0" text="Register" />
+            <Button id="customerLogin" fx:id="register" layoutX="199.0" layoutY="117.0" mnemonicParsing="false" onMouseClicked="#clickRegister" prefHeight="50.0" prefWidth="200.0" text="Create customer account" />
           </children>
         </AnchorPane>
       </items>

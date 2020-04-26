@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -60,6 +62,18 @@ public class GUIUserLogin {
     	String strUsername = textUsername.getText();
     	String strPassword = textPassword.getText();
     	
+    	// if login successfully
+    	boolean loginss = false;
+    	if (loginss) {
+    		
+    	}
+    	else {
+    		resetText();
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Error occurs");
+    		alert.setContentText("Wrong username or password!");
+    		alert.showAndWait();
+    	}
     }
 
     @FXML
@@ -72,4 +86,9 @@ public class GUIUserLogin {
 
     }
 
+    private void resetText() {
+    	textUsername.setText("");
+    	textPassword.setText("");
+    }
+    
 }

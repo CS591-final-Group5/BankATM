@@ -104,7 +104,7 @@ public class GUIHomepage extends Application {
     		Scene homepageScene = new Scene(pane, 600, 400);
     		Stage newStage = new Stage();
     		newStage.setScene(homepageScene);
-    		newStage.setTitle("Register a new account");
+    		newStage.setTitle("Register a bank account");
     		newStage.show();
     	} catch (IOException e) {
 			e.printStackTrace();
