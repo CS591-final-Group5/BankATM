@@ -5,16 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="BankATMGUI.GUIHomepage">
   <!-- TODO Add Nodes -->
   <children>
-    <MenuBar prefHeight="26.0" prefWidth="421.0" AnchorPane.bottomAnchor="266.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <MenuBar prefHeight="26.0" prefWidth="600.0" AnchorPane.bottomAnchor="374.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Close" />
-          </items>
-        </Menu>
         <Menu mnemonicParsing="false" text="Edit">
           <items>
             <MenuItem mnemonicParsing="false" text="Delete" />
@@ -25,20 +20,25 @@
             <MenuItem mnemonicParsing="false" text="About" />
           </items>
         </Menu>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="Close" />
+          </items>
+        </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.2553763440860215" focusTraversable="true" orientation="VERTICAL" prefHeight="266.0" prefWidth="421.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
+    <SplitPane blendMode="SRC_OVER" cache="false" disable="false" dividerPositions="0.22580645161290322" focusTraversable="true" minWidth="-1.0" mouseTransparent="false" orientation="VERTICAL" pickOnBounds="false" prefHeight="266.0" prefWidth="421.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
       <items>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="114.0" prefWidth="598.0">
+        <AnchorPane disable="false" minHeight="0.0" minWidth="0.0" prefHeight="114.0" prefWidth="598.0">
           <children>
-            <TextArea prefHeight="92.0" prefWidth="598.0" promptText="" text="                                              Welcome to BankATM System!" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TextArea disable="false" editable="false" focusTraversable="true" prefHeight="81.0" prefWidth="218.0" promptText="" text="&#10;Welcome to BankATM System!" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="190.0" AnchorPane.topAnchor="0.0" />
           </children>
         </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+        <AnchorPane disable="false" focusTraversable="true" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <Button layoutX="199.0" layoutY="117.0" mnemonicParsing="false" onMouseClicked="#CustomerLogin" prefHeight="50.0" prefWidth="200.0" text="Customer Login" />
-            <Button layoutX="199.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#BankManagerLogin" prefHeight="50.0" prefWidth="200.0" text="Bank Manager Login" />
-            <Button layoutX="199.0" layoutY="196.0" mnemonicParsing="false" onMouseClicked="#Exit" prefHeight="50.0" prefWidth="200.0" text="Exit" />
+            <Button fx:id="customerLogin" layoutX="199.0" layoutY="117.0" mnemonicParsing="false" onMouseClicked="#clickCustomerLogin" prefHeight="50.0" prefWidth="200.0" text="Customer Login" />
+            <Button fx:id="bankManagerLogin" layoutX="199.0" layoutY="35.0" mnemonicParsing="false" onMouseClicked="#clickBankManagerLogin" prefHeight="50.0" prefWidth="200.0" text="Bank Manager Login" />
+            <Button fx:id="exit" layoutX="199.0" layoutY="196.0" mnemonicParsing="false" onMouseClicked="#clickExit" prefHeight="50.0" prefWidth="200.0" text="Exit" />
           </children>
         </AnchorPane>
       </items>

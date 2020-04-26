@@ -10,5 +10,8 @@ public class Main {
 		Application.launch(BankATMGUI.GUIHomepage.class, args);
 	}
 
+	/*
+	 * Unfinished: throw exception
+	 */
 	
 }
