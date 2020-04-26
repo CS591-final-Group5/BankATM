@@ -1,6 +1,6 @@
 
 package BankATMGUI;
 
-public class GUIUserLogin extends GUIBankATM {
+public class GUIUserLogin {
 
 }
