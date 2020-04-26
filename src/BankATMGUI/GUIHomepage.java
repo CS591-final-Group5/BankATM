@@ -43,12 +43,14 @@ public class GUIHomepage extends Application {
     @FXML
     private URL location;
 
-
     @FXML
     private Button bankManagerLogin;
 
     @FXML
     private Button customerLogin;
+    
+    @FXML
+    private Button register;
 
     @FXML
     private Button exit;
@@ -58,30 +60,58 @@ public class GUIHomepage extends Application {
         assert bankManagerLogin != null : "fx:id=\"bankManagerLogin\" was not injected: check your FXML file 'GUIHomepage.fxml'.";
         assert customerLogin != null : "fx:id=\"customerLogin\" was not injected: check your FXML file 'GUIHomepage.fxml'.";
         assert exit != null : "fx:id=\"exit\" was not injected: check your FXML file 'GUIHomepage.fxml'.";
+        assert register != null : "fx:id=\"register\" was not injected: check your FXML file 'GUIHomepage.fxml'.";
 
     }
     
     @FXML
     void clickBankManagerLogin(MouseEvent event) {
-    	// GUIUserLogin userLogin = (GUIUserLogin) replaceSceneContent("");
-    	// Stage stage = (Stage) 
+    	try {
+    		FXMLLoader homepageLoader = new FXMLLoader(GUIUserLogin.class.getResource("GUIBankManagerLogin.fxml"));
+			Parent pane = homepageLoader.load();
+    		Scene homepageScene = new Scene(pane, 600, 400);
+    		Stage newStage = new Stage();
+    		newStage.setScene(homepageScene);
+    		newStage.setTitle("Login as Bank Manager");
+    		newStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	bankManagerLogin.getScene().getWindow().hide(); // close previous page
     }
 
     @FXML
     void clickCustomerLogin(MouseEvent event) {
     	try {
-    		FXMLLoader homepageLoader = new FXMLLoader(GUIUserLogin.class.getResource("GUIUserLogin.fxml"));
+    		FXMLLoader homepageLoader = new FXMLLoader(GUIUserLogin.class.getResource("GUICustomersLogin.fxml"));
 			Parent pane = homepageLoader.load();
     		Scene homepageScene = new Scene(pane, 600, 400);
     		Stage newStage = new Stage();
     		newStage.setScene(homepageScene);
+    		newStage.setTitle("Login as Customers");
     		newStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	bankManagerLogin.getScene().getWindow().hide();
+    	customerLogin.getScene().getWindow().hide(); // close previous page
     }
 
+    @FXML
+    void clickRegister(MouseEvent event) {
+    	try {
+    		FXMLLoader homepageLoader = new FXMLLoader(GUIUserRegister.class.getResource("GUIUserRegister.fxml"));
+			Parent pane = homepageLoader.load();
+    		Scene homepageScene = new Scene(pane, 600, 400);
+    		Stage newStage = new Stage();
+    		newStage.setScene(homepageScene);
+    		newStage.setTitle("Register a new account");
+    		newStage.show();
+    	} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	register.getScene().getWindow().hide(); // close previous page    	
+    }
+    
     @FXML
     void clickExit(MouseEvent event) {
     	Platform.exit();

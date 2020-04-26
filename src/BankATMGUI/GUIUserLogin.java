@@ -4,6 +4,8 @@ package BankATMGUI;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,11 +32,10 @@ public class GUIUserLogin {
     private Button signIn;
 
     @FXML
-    private PasswordField textPassword;
-
-    @FXML
     private TextField textUsername;
-
+    
+    @FXML
+    private PasswordField textPassword;
 
     @FXML
     void clickBack(MouseEvent event) {
@@ -43,14 +44,22 @@ public class GUIUserLogin {
     		Scene homepageScene = new Scene(pane, 600, 400);
     		Stage newStage = new Stage();
     		newStage.setScene(homepageScene);
+    		newStage.setTitle("BankATM System Homepage");
     		newStage.show();
     	} catch (IOException e) {
 			e.printStackTrace();
 		}
+    	back.getScene().getWindow().hide(); // close previous page
     }
 
     @FXML
     void clickSignIn(MouseEvent event) {
+    	
+    	// check the username and password in database 
+    	
+    	String strUsername = textUsername.getText();
+    	String strPassword = textPassword.getText();
+    	
     }
 
     @FXML

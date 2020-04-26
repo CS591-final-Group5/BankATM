@@ -31,7 +31,7 @@
       <items>
         <AnchorPane disable="false" minHeight="0.0" minWidth="0.0" prefHeight="114.0" prefWidth="598.0">
           <children>
-            <TextArea disable="false" editable="false" focusTraversable="true" prefHeight="60.0" prefWidth="312.0" promptText="" text="Please enter your username and password!" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="143.0" AnchorPane.rightAnchor="143.0" AnchorPane.topAnchor="0.0" />
+            <TextArea disable="false" editable="false" focusTraversable="true" prefHeight="60.0" prefWidth="201.0" promptText="" text="Hi, Prof Cpk&#10;Your username is BMcpk&#10;Your password is BMcpk" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="198.5" AnchorPane.rightAnchor="198.5" AnchorPane.topAnchor="0.0" />
           </children>
         </AnchorPane>
         <AnchorPane disable="false" focusTraversable="true" minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="598.0">
