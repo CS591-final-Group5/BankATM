@@ -1,19 +1,21 @@
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-
 import BankATMGUI.*;
-
 import BankATMDAO.*;
+
+import javax.swing.*;
 
 public class Main {
 
 	public static void main(String[] args) throws Exception {
 		
-		Database database = new Database();
+		//Database database = new Database();
 		
-		
-		//Application.launch(BankATMGUI.GUIHomepage.class, args);
+		try {
+			GUIHomepage frame = new GUIHomepage();
+			frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*

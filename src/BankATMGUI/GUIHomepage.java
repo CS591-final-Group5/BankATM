@@ -1,120 +1,97 @@
-
 package BankATMGUI;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
 
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
+public class GUIHomepage extends JFrame {
 
-public class GUIHomepage extends Application {
-	
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		try {
-			FXMLLoader homepageLoader = new FXMLLoader(getClass().getResource("GUIHomepage.fxml"));
-			Parent pane = homepageLoader.load();
-			Scene homepageScene = new Scene(pane, 600, 400);
-			
-			primaryStage.setTitle("BankATM System Homepage!");
-			primaryStage.setScene(homepageScene);
-			primaryStage.setWidth(600);
-			primaryStage.setHeight(400);
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private JPanel contentPane;
+
+	/**
+	 * Create the frame.
+	 */
+	public GUIHomepage() {
+		setTitle("BankATM System Homepage");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 600);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Welcome to BankATM System!");
+		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+		lblNewLabel.setForeground(new Color(255, 0, 0));
+		lblNewLabel.setBounds(220, 41, 360, 60);
+		contentPane.add(lblNewLabel);
+		
+		JButton btnBMLogin = new JButton("Bank Manager Login");
+		btnBMLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setVisible(false);
+					GUIBankManagerLogin frame = new GUIBankManagerLogin();
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnBMLogin.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		btnBMLogin.setBounds(100, 180, 270, 60);
+		contentPane.add(btnBMLogin);
+		
+		JButton btnCtLogin = new JButton("Customers Login");
+		btnCtLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setVisible(false);
+					GUICustomersLogin frame = new GUICustomersLogin();
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnCtLogin.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		btnCtLogin.setBounds(430, 180, 270, 60);
+		contentPane.add(btnCtLogin);
+		
+		JButton btnCreateAccount = new JButton("Create customer account");
+		btnCreateAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setVisible(false);
+					GUIUserRegister frame = new GUIUserRegister();
+					frame.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnCreateAccount.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		btnCreateAccount.setBounds(265, 335, 270, 60);
+		contentPane.add(btnCreateAccount);
+		
+		JButton btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnExit.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		btnExit.setBounds(265, 442, 270, 60);
+		contentPane.add(btnExit);
 	}
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private Button bankManagerLogin;
-
-    @FXML
-    private Button customerLogin;
-    
-    @FXML
-    private Button register;
-
-    @FXML
-    private Button exit;
-
-    @FXML
-    void initialize() {
-        assert bankManagerLogin != null : "fx:id=\"bankManagerLogin\" was not injected: check your FXML file 'GUIHomepage.fxml'.";
-        assert customerLogin != null : "fx:id=\"customerLogin\" was not injected: check your FXML file 'GUIHomepage.fxml'.";
-        assert exit != null : "fx:id=\"exit\" was not injected: check your FXML file 'GUIHomepage.fxml'.";
-        assert register != null : "fx:id=\"register\" was not injected: check your FXML file 'GUIHomepage.fxml'.";
-
-    }
-    
-    @FXML
-    void clickBankManagerLogin(MouseEvent event) {
-    	try {
-    		FXMLLoader homepageLoader = new FXMLLoader(GUIUserLogin.class.getResource("GUIBankManagerLogin.fxml"));
-			Parent pane = homepageLoader.load();
-    		Scene homepageScene = new Scene(pane, 600, 400);
-    		Stage newStage = new Stage();
-    		newStage.setScene(homepageScene);
-    		newStage.setTitle("Login as Bank Manager");
-    		newStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	bankManagerLogin.getScene().getWindow().hide(); // close previous page
-    }
-
-    @FXML
-    void clickCustomerLogin(MouseEvent event) {
-    	try {
-    		FXMLLoader homepageLoader = new FXMLLoader(GUIUserLogin.class.getResource("GUICustomersLogin.fxml"));
-			Parent pane = homepageLoader.load();
-    		Scene homepageScene = new Scene(pane, 600, 400);
-    		Stage newStage = new Stage();
-    		newStage.setScene(homepageScene);
-    		newStage.setTitle("Login as Customers");
-    		newStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	customerLogin.getScene().getWindow().hide(); // close previous page
-    }
-
-    @FXML
-    void clickRegister(MouseEvent event) {
-    	try {
-    		FXMLLoader homepageLoader = new FXMLLoader(GUIUserRegister.class.getResource("GUIUserRegister.fxml"));
-			Parent pane = homepageLoader.load();
-    		Scene homepageScene = new Scene(pane, 600, 400);
-    		Stage newStage = new Stage();
-    		newStage.setScene(homepageScene);
-    		newStage.setTitle("Register a bank account");
-    		newStage.show();
-    	} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	register.getScene().getWindow().hide(); // close previous page    	
-    }
-    
-    @FXML
-    void clickExit(MouseEvent event) {
-    	Platform.exit();
-    }
 
 }
