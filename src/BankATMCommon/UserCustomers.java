@@ -6,9 +6,10 @@ import java.util.ArrayList;
 public class UserCustomers extends Users {
 	
 	private ArrayList<Accounts> alAccounts;
+	private Transactions transactions;
 	
-	public UserCustomers(String Username, String Password, String Email) {
-		super(Username, Password, Email);
+	public UserCustomers(String Username, String Password, String Email, String Name) {
+		super(Username, Password, Email, Name);
 		alAccounts = new ArrayList<Accounts> ();
 	}
 	
