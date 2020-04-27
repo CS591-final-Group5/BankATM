@@ -67,7 +67,7 @@ public class Database {
 						       "primary key( username ))";
 				stmtDB.executeUpdate(sql_2);
 				/*
-				 * Create table ""
+				 * Create table "accounts"
 				 */
 				String sql_3 = "create table accounts (" +
 					           "username varchar(255) not null, " +
@@ -75,8 +75,16 @@ public class Database {
 					           "balance double, " + 
 					           "primary key( accountnumber ))";
 				stmtDB.executeUpdate(sql_3);
-				
-				
+				/*
+				 * Create table "transactions"
+				 */
+				String sql_4 = "create table transactions (" +
+				           "username varchar(255) not null, " +
+				           "id varchar(255) not null, " +
+				           "time date, " +
+				           "amount double not null, " + 
+				           "primary key( id ))";
+				stmtDB.executeUpdate(sql_4);
 				
 				
 				
