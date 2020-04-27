@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import BankATMGUI.GUIUserRegister.BackListener;
+
 import javax.swing.SwingConstants;
 
 public class GUICustomersLogin extends JFrame {
@@ -56,17 +59,8 @@ public class GUICustomersLogin extends JFrame {
 		contentPane.add(passwordField);
 		
 		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					setVisible(false);
-					GUIHomepage frame = new GUIHomepage();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
+		BackListener bl = new BackListener();
+		btnBack.addActionListener(bl);
 		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnBack.setBounds(459, 443, 270, 60);
 		contentPane.add(btnBack);
@@ -87,4 +81,16 @@ public class GUICustomersLogin extends JFrame {
 		contentPane.add(lblPassword);
 	}
 
+	class BackListener implements ActionListener {
+		public void actionPerformed( ActionEvent e ) {
+			try {
+				setVisible(false);
+				GUIHomepage frame = new GUIHomepage();
+				frame.setVisible(true);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
 }

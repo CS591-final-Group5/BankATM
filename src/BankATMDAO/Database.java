@@ -1,6 +1,7 @@
 package BankATMDAO;
 
 import java.sql.*;
+import BankATMCommon.*;
 
 public class Database {
 
@@ -15,6 +16,8 @@ public class Database {
 	static final String USERNAME = "root";
 	static final String PASSWORD = "123456";
 	static final String DBNAME = "bankdb";
+	static final String bankMangerUsername = "BMcpk";
+	static final String bankMangerPassword = "CS591";
 	
 	public Database() {
 		try {
@@ -27,16 +30,16 @@ public class Database {
 			 */
 			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			boolean dbExist = false;
-			ResultSet resultSet = conn.getMetaData().getCatalogs();
-			while (resultSet.next()) {
-				String databaseName = resultSet.getString(1);
+			ResultSet res = conn.getMetaData().getCatalogs();
+			while (res.next()) {
+				String databaseName = res.getString(1);
 				if (databaseName.compareTo("bankdb") == 0) {
 					dbExist = true;
 					System.out.println("There exists a bankdb db!");
 					break;
 				}
 			}
-			resultSet.close();
+			res.close();
 			/*
 			 * If the bankdb exists, just use it
 			 * Else, create a bankdb
@@ -98,6 +101,50 @@ public class Database {
 			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static boolean findUser(String username) {
+		try {
+			Class.forName(JDBC);
+			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			String sql;
+            sql = "select * FROM users where username='" + username + "'";
+            ResultSet res = stmt.executeQuery(sql);
+            if(res.isBeforeFirst() == false){
+            	// check if res == null
+            	return false;
+            }
+            res.close();
+            conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public static void createUser(String username, String password, String email) {
+		try {
+			Class.forName(JDBC);
+			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			String sql;
+            sql = "insert into users " + 
+			      "values ('" + username + "', '" + password + "', '" + email + "')";
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+            conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void character() {
+		try {
+			
+		} catch (Exception e) {
+			
 		}
 	}
 	

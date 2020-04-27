@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import BankATMGUI.GUIUserRegister.BackListener;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -36,9 +39,9 @@ public class GUIBankManagerLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblHeadline = new JLabel("<html>\r\nHi, Christine<br>\r\nYour username is BMcpk<br>\r\nYour password is CS591<br>\r\n</html>");
+		JLabel lblHeadline = new JLabel("<html>\r\nHi, Christine<br>\r\nYour username is BMcpk<br>\r\nYour default password is CS591<br>\r\n</html>");
 		lblHeadline.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		lblHeadline.setBounds(270, 28, 240, 120);
+		lblHeadline.setBounds(234, 27, 307, 120);
 		contentPane.add(lblHeadline);
 		
 		textField = new JTextField();
@@ -56,17 +59,8 @@ public class GUIBankManagerLogin extends JFrame {
 		contentPane.add(passwordField);
 		
 		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					setVisible(false);
-					GUIHomepage frame = new GUIHomepage();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
+		BackListener bl = new BackListener();
+		btnBack.addActionListener(bl);
 		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnBack.setBounds(459, 443, 270, 60);
 		contentPane.add(btnBack);
@@ -86,4 +80,17 @@ public class GUIBankManagerLogin extends JFrame {
 		lblPassword.setBounds(100, 332, 110, 40);
 		contentPane.add(lblPassword);
 	}
+	
+	class BackListener implements ActionListener {
+		public void actionPerformed( ActionEvent e ) {
+			try {
+				setVisible(false);
+				GUIHomepage frame = new GUIHomepage();
+				frame.setVisible(true);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
 }

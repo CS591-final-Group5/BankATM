@@ -5,20 +5,25 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import BankATMDAO.Database;
+
 import javax.swing.SwingConstants;
 
 public class GUIUserRegister extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textUsername;
 	private JPasswordField passwordField;
 	private JButton btnRegister;
 	private JTextField textEmail;
@@ -43,13 +48,13 @@ public class GUIUserRegister extends JFrame {
 		lblHeadline.setBounds(194, 28, 420, 100);
 		contentPane.add(lblHeadline);
 		
-		textField = new JTextField("");
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setFont(new Font("Consolas", Font.PLAIN, 20));
-		textField.setToolTipText("");
-		textField.setBounds(240, 150, 290, 60);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textUsername = new JTextField("");
+		textUsername.setHorizontalAlignment(SwingConstants.CENTER);
+		textUsername.setFont(new Font("Consolas", Font.PLAIN, 20));
+		textUsername.setToolTipText("");
+		textUsername.setBounds(240, 150, 290, 60);
+		contentPane.add(textUsername);
+		textUsername.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		passwordField.setToolTipText("Password\r\n");
@@ -59,22 +64,15 @@ public class GUIUserRegister extends JFrame {
 		contentPane.add(passwordField);
 		
 		JButton btnBack = new JButton("Back");
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					setVisible(false);
-					GUIHomepage frame = new GUIHomepage();
-					frame.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
+		BackListener bl = new BackListener();
+		btnBack.addActionListener(bl);
 		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnBack.setBounds(459, 443, 270, 60);
 		contentPane.add(btnBack);
 		
 		btnRegister = new JButton("Register");
+		RegisterListener rgtl = new RegisterListener();
+		btnRegister.addActionListener(rgtl);
 		btnRegister.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnRegister.setBounds(81, 443, 270, 60);
 		contentPane.add(btnRegister);
@@ -103,4 +101,71 @@ public class GUIUserRegister extends JFrame {
 		contentPane.add(lblEmail);
 	}
 
+	class RegisterListener implements ActionListener {
+		public void actionPerformed( ActionEvent e ) {
+			String strUsername = textUsername.getText();
+			String strPassword = String.valueOf(passwordField.getPassword());
+			String strEmail = textEmail.getText();
+			System.out.println(strUsername);
+			System.out.println(strPassword);
+			System.out.println(strEmail);
+			/*
+			 * Check if there is invalid character
+			 * If the format is valid, create a user account
+			 */
+			if (strUsername.length() == 0 || strPassword.length() == 0 || strEmail.length() == 0) {
+				JOptionPane.showMessageDialog(null, "Lack of enough info!", 
+						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+			}
+			else {
+				boolean invalid = false;
+				for (int i = 0; i < strUsername.length(); i ++) {
+					char c = strUsername.charAt(i);
+					if (!Character.isLetterOrDigit(c)) {
+						invalid = true;
+						break;
+					}
+				}
+				for (int i = 0; i < strPassword.length(); i ++) {
+					char c = strPassword.charAt(i);
+					if (!Character.isLetterOrDigit(c)) {
+						invalid = true;
+						break;
+					}
+				}
+				for (int i = 0; i < strEmail.length(); i ++) {
+					char c = strEmail.charAt(i);
+					if (!Character.isLetterOrDigit(c) && c != '@') {
+						invalid = true;
+						break;
+					}
+				}
+				if (invalid) {
+					JOptionPane.showMessageDialog(null, "Invalid character!", 
+							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					if (Database.findUser(strUsername)) {
+						JOptionPane.showMessageDialog(null, "This account name has already been claimed!", 
+								"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						Database.createUser(strUsername, strPassword, strEmail);
+					}
+				}
+			}
+		}
+	}
+	
+	class BackListener implements ActionListener {
+		public void actionPerformed( ActionEvent e ) {
+			try {
+				setVisible(false);
+				GUIHomepage frame = new GUIHomepage();
+				frame.setVisible(true);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
 }

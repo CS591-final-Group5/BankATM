@@ -8,7 +8,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		
-		//Database database = new Database();
+		Database database = new Database();
 		
 		try {
 			GUIHomepage frame = new GUIHomepage();
