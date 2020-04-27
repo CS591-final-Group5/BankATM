@@ -11,8 +11,8 @@ CAS CS591 P1: Object Oriented Software Principles and Design (in Java)
 ### Compile and Run
 	cd src
 	If you are using JDK 11 or higher:  
-	-  javac --module-path "../lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml Main.java  
-	-  java --module-path "../lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml -cp .:"../lib/mysql-connector-java-8.0.19.jar"  Main  
+	-  javac Main.java  
+	-  java -cp .:"../lib/mysql-connector-java-8.0.19.jar"  Main  
 
 ### Databases
 	**mysql 5.7**  
