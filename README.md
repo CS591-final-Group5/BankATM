@@ -13,10 +13,9 @@ CAS CS591 P1: Object Oriented Software Principles and Design (in Java)
 cd src
 
 If you are using JDK 11 or higher:  
-(JavaFX has been removed, so you need to add all libraries in /lib to Java build path first)  
 
--  javac --module-path "/home/beven96/eclipse-workspace/BankATM/lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml Main.java  
--  java --module-path "/home/beven96/eclipse-workspace/BankATM/lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml -cp .:"../lib/mysql-connector-java-8.0.19.jar"  Main  
+-  javac --module-path "../lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml Main.java  
+-  java --module-path "../lib/javafx-sdk-11.0.2/lib" --add-modules javafx.controls,javafx.fxml -cp .:"../lib/mysql-connector-java-8.0.19.jar"  Main  
 
 ### Databases
 **mysql 5.7**  
