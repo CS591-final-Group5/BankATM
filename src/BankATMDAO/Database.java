@@ -96,7 +96,7 @@ public class Database {
 				               "username varchar(255) not null, " +
 				               "cid varchar(255) not null, " +
 				               "primary key( cid ))";
-				stmtDB.executeUpdate(sql_4);
+				stmtDB.executeUpdate(sql_5);
 				
 				
 				
