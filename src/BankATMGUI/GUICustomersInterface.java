@@ -88,16 +88,17 @@ public class GUICustomersInterface extends JFrame {
 		mnHelp.add(mntmNewMenuItem);
 		desktopPane.setBounds(0, 56, 1012, 666);
 		contentPane.add(desktopPane);
-		setLocationRelativeTo(null);
 		
+		setLocationRelativeTo(null);
 	}
 	
 	class ChangePasswordListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
-				setVisible(false);
+				// setVisible(false);
 				GUIChangeBankATMPassword frame = new GUIChangeBankATMPassword(username);
 				frame.setVisible(true);
+				desktopPane.add(frame);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

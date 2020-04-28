@@ -43,6 +43,9 @@ public class GUIChangeBankATMPassword extends GUIChangePassword {
 		getContentPane().setLayout(null);
 		contentPane.setLayout(null);
 		
+		setClosable(true);
+		setIconifiable(true);
+		
 		JLabel lblHeadline = new JLabel("<html>\r\nPlease enter your new password twice.\r\n</html>");
 		lblHeadline.setForeground(new Color(255, 0, 0));
 		lblHeadline.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
@@ -99,13 +102,7 @@ public class GUIChangeBankATMPassword extends GUIChangePassword {
 
 	class BackListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
-			try {
-				setVisible(false);
-				GUICustomersInterface frame = new GUICustomersInterface(username);
-				frame.setVisible(true);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			setVisible(false);
 		}
 	}
 	
