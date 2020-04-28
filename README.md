@@ -53,12 +53,16 @@ GUIBankATM
 -  GUIHomepage
 -  GUIUserRegister
 -  GUIUserLogin
-    -  GUIUserBankManagerLogin.fxml
-    -  GUIUserCustomersLogin.fxml
--  GUIUserProfile
-    -  GUIUserBankManagerProfile
-    -  GUIUserCustomersProfile
+    -  GUIUserBankManagerLogin
+    -  GUIUserCustomersLogin
+-  GUIChangePassword
+    -  GUIChangeBankSystemPassword
+    -  GUIChangeCardsPassword
 -  GUI****
 -  GUIDailyReport
 -  GUIStockMarket  
+
+
+### Tips
+The bank manager's account can only be used in BankManagerLogin page. You can create a customer account that has the same username as the name manager's account.
 

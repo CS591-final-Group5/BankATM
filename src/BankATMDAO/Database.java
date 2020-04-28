@@ -16,8 +16,8 @@ public class Database {
 	static final String USERNAME = "root";
 	static final String PASSWORD = "123456";
 	static final String DBNAME = "bankdb";
-	static final String bankMangerUsername = "BMcpk";
-	static final String bankMangerPassword = "CS591";
+	public static final String bankMangerUsername = "BMcpk";
+	public static final String bankMangerPassword = "CS591";
 	
 	public Database() {
 		try {
@@ -66,6 +66,7 @@ public class Database {
 				String sql_2 = "create table users (" +
 						       "username varchar(255) not null, " +
 						       "password varchar(255) not null, " +
+						       "fullname varchar(255) not null, " +
 						       "email varchar(255) not null, " + 
 						       "primary key( username ))";
 				stmtDB.executeUpdate(sql_2);
@@ -82,21 +83,25 @@ public class Database {
 				 * Create table "transactions"
 				 */
 				String sql_4 = "create table transactions (" +
-				           "username varchar(255) not null, " +
-				           "id varchar(255) not null, " +
-				           "time date, " +
-				           "amount double not null, " + 
-				           "primary key( id ))";
+				               "username varchar(255) not null, " +
+				               "tid varchar(255) not null, " +
+				               "time date, " +
+				               "amount double not null, " + 
+				               "primary key( tid ))";
+				stmtDB.executeUpdate(sql_4);
+				/*
+				 * Create table "collaterals"
+				 */
+				String sql_5 = "create table collaterals (" +
+				               "username varchar(255) not null, " +
+				               "cid varchar(255) not null, " +
+				               "primary key( cid ))";
 				stmtDB.executeUpdate(sql_4);
 				
 				
 				
 				
-				
-				
-				
-				
-				
+				stmt.close();
 			}
 			conn.close();
 		} catch (Exception e) {
@@ -109,14 +114,14 @@ public class Database {
 			Class.forName(JDBC);
 			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
 			Statement stmt = conn.createStatement();
-			String sql;
-            sql = "select * FROM users where username='" + username + "'";
+			String  sql = "select * FROM users where username='" + username + "'";
             ResultSet res = stmt.executeQuery(sql);
-            if(res.isBeforeFirst() == false){
+            if(res.next() == false){
             	// check if res == null
             	return false;
             }
             res.close();
+            stmt.close();
             conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,28 +129,72 @@ public class Database {
 		return false;
 	}
 	
-	public static void createUser(String username, String password, String email) {
+	public static void createUser(String username, String password, String email, String fullname) {
 		try {
 			Class.forName(JDBC);
 			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
 			Statement stmt = conn.createStatement();
-			String sql;
-            sql = "insert into users " + 
-			      "values ('" + username + "', '" + password + "', '" + email + "')";
-            System.out.println(sql);
+			String sql = "insert into users " + 
+					     "values ('" + username + "', '" + password + 
+			             "', '" + email + "', '" + fullname + "')";
             stmt.executeUpdate(sql);
             conn.close();
+            stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void character() {
+	public static boolean userLogin(String username, String password) {
 		try {
-			
+			Class.forName(JDBC);
+			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			String sql = "select * FROM users where username='" + username + "'";
+			ResultSet res = stmt.executeQuery(sql);
+			if(res.next() == false){
+				res.close();
+				conn.close();
+	            stmt.close();
+				return false;
+			}
+			else {
+				String dbPassword = res.getString("password");
+				res.close();
+				conn.close();
+	            stmt.close();
+				return dbPassword.compareTo(password) == 0 ? true : false;
+			}
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
+		return false;
+	}
+	
+	public static void changePassword(String username, String password) {
+		/*
+		 * Change the password of your BankATM account
+		 */
+		try {
+			Class.forName(JDBC);
+			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
+			Statement stmt = conn.createStatement();
+			String sql = "update users " +
+			             "set password='" + password + "' " +
+					     "where username='" + username + "'";
+			stmt.executeUpdate(sql);
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void changePassword(String username, String password, int cardId) {
+		/*
+		 * Change the password of one card in your BankATM account
+		 */
+		
 	}
 	
 }

@@ -1,5 +1,6 @@
 package BankATMGUI;
 
+import BankATMDAO.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -7,9 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import BankATMGUI.GUIUserRegister.BackListener;
-
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -21,7 +22,7 @@ import javax.swing.SwingConstants;
 public class GUIBankManagerLogin extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField textUsername;
 	private JPasswordField passwordField;
 	private JButton btnSignIn;
 	private JLabel lblUsername;
@@ -44,13 +45,13 @@ public class GUIBankManagerLogin extends JFrame {
 		lblHeadline.setBounds(234, 27, 307, 120);
 		contentPane.add(lblHeadline);
 		
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setFont(new Font("Consolas", Font.PLAIN, 20));
-		textField.setToolTipText("");
-		textField.setBounds(240, 196, 290, 60);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textUsername = new JTextField();
+		textUsername.setHorizontalAlignment(SwingConstants.CENTER);
+		textUsername.setFont(new Font("Consolas", Font.PLAIN, 20));
+		textUsername.setToolTipText("");
+		textUsername.setBounds(240, 196, 290, 60);
+		contentPane.add(textUsername);
+		textUsername.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -66,6 +67,8 @@ public class GUIBankManagerLogin extends JFrame {
 		contentPane.add(btnBack);
 		
 		btnSignIn = new JButton("Sign in");
+		SignInListener sil = new SignInListener();
+		btnSignIn.addActionListener(sil);
 		btnSignIn.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnSignIn.setBounds(81, 443, 270, 60);
 		contentPane.add(btnSignIn);
@@ -87,6 +90,25 @@ public class GUIBankManagerLogin extends JFrame {
 				setVisible(false);
 				GUIHomepage frame = new GUIHomepage();
 				frame.setVisible(true);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class SignInListener implements ActionListener {
+		public void actionPerformed( ActionEvent e ) {
+			try {
+				String strUsername = textUsername.getText();
+				String strPassword = String.valueOf(passwordField.getPassword());
+				if (strUsername.compareTo(Database.bankMangerUsername) == 0 &&
+						strPassword.compareTo(Database.bankMangerPassword) == 0) {
+					setVisible(false);
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Wrong username or wrong password!", 
+							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

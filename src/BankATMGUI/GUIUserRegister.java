@@ -23,13 +23,15 @@ import javax.swing.SwingConstants;
 public class GUIUserRegister extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textUsername;
-	private JPasswordField passwordField;
 	private JButton btnRegister;
 	private JTextField textEmail;
+	private JTextField textUsername;
+	private JTextField textFullname;
+	private JPasswordField passwordField;
 	private JLabel lblUsername;
 	private JLabel lblPassword;
 	private JLabel lblEmail;
+	private JLabel lblFullname;
 
 	/**
 	 * Create the frame.
@@ -45,14 +47,14 @@ public class GUIUserRegister extends JFrame {
 		
 		JLabel lblHeadline = new JLabel("<html>\r\nPlease enter your username and password!\r\n</html>");
 		lblHeadline.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		lblHeadline.setBounds(194, 28, 420, 100);
+		lblHeadline.setBounds(194, 20, 420, 100);
 		contentPane.add(lblHeadline);
 		
 		textUsername = new JTextField("");
 		textUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		textUsername.setFont(new Font("Consolas", Font.PLAIN, 20));
 		textUsername.setToolTipText("");
-		textUsername.setBounds(240, 150, 290, 60);
+		textUsername.setBounds(240, 120, 290, 60);
 		contentPane.add(textUsername);
 		textUsername.setColumns(10);
 		
@@ -60,21 +62,21 @@ public class GUIUserRegister extends JFrame {
 		passwordField.setToolTipText("Password\r\n");
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setFont(new Font("Consolas", Font.PLAIN, 20));
-		passwordField.setBounds(240, 240, 290, 60);
+		passwordField.setBounds(240, 210, 290, 60);
 		contentPane.add(passwordField);
 		
 		JButton btnBack = new JButton("Back");
 		BackListener bl = new BackListener();
 		btnBack.addActionListener(bl);
 		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnBack.setBounds(459, 443, 270, 60);
+		btnBack.setBounds(460, 460, 270, 60);
 		contentPane.add(btnBack);
 		
 		btnRegister = new JButton("Register");
 		RegisterListener rgtl = new RegisterListener();
 		btnRegister.addActionListener(rgtl);
 		btnRegister.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnRegister.setBounds(81, 443, 270, 60);
+		btnRegister.setBounds(80, 460, 270, 60);
 		contentPane.add(btnRegister);
 		
 		textEmail = new JTextField();
@@ -82,23 +84,36 @@ public class GUIUserRegister extends JFrame {
 		textEmail.setToolTipText("");
 		textEmail.setFont(new Font("Consolas", Font.PLAIN, 20));
 		textEmail.setColumns(10);
-		textEmail.setBounds(240, 330, 290, 60);
+		textEmail.setBounds(240, 300, 290, 60);
 		contentPane.add(textEmail);
 		
 		lblUsername = new JLabel("Username: ");
 		lblUsername.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblUsername.setBounds(100, 160, 110, 40);
+		lblUsername.setBounds(80, 130, 110, 40);
 		contentPane.add(lblUsername);
 		
 		lblPassword = new JLabel("Password: ");
 		lblPassword.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblPassword.setBounds(100, 255, 110, 40);
+		lblPassword.setBounds(80, 225, 110, 40);
 		contentPane.add(lblPassword);
 		
 		lblEmail = new JLabel("Email: ");
 		lblEmail.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblEmail.setBounds(100, 340, 110, 40);
+		lblEmail.setBounds(80, 310, 110, 40);
 		contentPane.add(lblEmail);
+		
+		lblFullname = new JLabel("Fullname:");
+		lblFullname.setFont(new Font("Consolas", Font.BOLD, 20));
+		lblFullname.setBounds(80, 395, 110, 40);
+		contentPane.add(lblFullname);
+		
+		textFullname = new JTextField();
+		textFullname.setToolTipText("");
+		textFullname.setHorizontalAlignment(SwingConstants.CENTER);
+		textFullname.setFont(new Font("Consolas", Font.PLAIN, 20));
+		textFullname.setColumns(10);
+		textFullname.setBounds(240, 385, 290, 60);
+		contentPane.add(textFullname);
 	}
 
 	class RegisterListener implements ActionListener {
@@ -106,14 +121,13 @@ public class GUIUserRegister extends JFrame {
 			String strUsername = textUsername.getText();
 			String strPassword = String.valueOf(passwordField.getPassword());
 			String strEmail = textEmail.getText();
-			System.out.println(strUsername);
-			System.out.println(strPassword);
-			System.out.println(strEmail);
+			String strFullname = textFullname.getText();
 			/*
 			 * Check if there is invalid character
-			 * If the format is valid, create a user account
+			 * If the format is valid, create a user account, then go to homepage
 			 */
-			if (strUsername.length() == 0 || strPassword.length() == 0 || strEmail.length() == 0) {
+			if (strUsername.length() == 0 || strPassword.length() == 0 
+					|| strEmail.length() == 0 || strFullname.length() == 0) {
 				JOptionPane.showMessageDialog(null, "Lack of enough info!", 
 						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 			}
@@ -135,7 +149,14 @@ public class GUIUserRegister extends JFrame {
 				}
 				for (int i = 0; i < strEmail.length(); i ++) {
 					char c = strEmail.charAt(i);
-					if (!Character.isLetterOrDigit(c) && c != '@') {
+					if (!Character.isLetterOrDigit(c) && c != '@' && c != '.') {
+						invalid = true;
+						break;
+					}
+				}
+				for (int i = 0; i < strFullname.length(); i ++) {
+					char c = strFullname.charAt(i);
+					if (!Character.isLetterOrDigit(c) && c != ' ') {
 						invalid = true;
 						break;
 					}
@@ -150,7 +171,10 @@ public class GUIUserRegister extends JFrame {
 								"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 					}
 					else {
-						Database.createUser(strUsername, strPassword, strEmail);
+						Database.createUser(strUsername, strPassword, strEmail, strFullname);
+						setVisible(false);
+						GUIHomepage frame = new GUIHomepage();
+						frame.setVisible(true);
 					}
 				}
 			}
