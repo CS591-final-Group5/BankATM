@@ -14,15 +14,18 @@ import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JDesktopPane;
 
 public class GUICustomersInterface extends JFrame {
 
 	private String username;
 	private JPanel contentPane;
+	private final JDesktopPane desktopPane = new JDesktopPane();
 
 	/**
 	 * Create the frame.
@@ -41,38 +44,52 @@ public class GUICustomersInterface extends JFrame {
 		menuBar.setBounds(0, 0, 1012, 45);
 		contentPane.add(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Setting");
-		menuBar.add(mnNewMenu);
+		JMenu mnSetting = new JMenu("Setting");
+		mnSetting.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Setting.png")));
+		menuBar.add(mnSetting);
 		
 		JMenuItem mntmChangePassword = new JMenuItem("Change Password");
 		ChangePasswordListener cpl = new ChangePasswordListener();
 		mntmChangePassword.addActionListener(cpl);
 		mntmChangePassword.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/ChangePassword.png")));
-		mnNewMenu.add(mntmChangePassword);
+		mnSetting.add(mntmChangePassword);
 		
 		JMenuItem mntmLogout = new JMenuItem("Logout (Return to homepage)");
 		LogoutListener rl = new LogoutListener();
 		mntmLogout.addActionListener(rl);
 		mntmLogout.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Return.png")));
-		mnNewMenu.add(mntmLogout);
+		mnSetting.add(mntmLogout);
 		
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		ExitListener el = new ExitListener();
 		mntmExit.addActionListener(el);
 		mntmExit.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Exit.png")));
-		mnNewMenu.add(mntmExit);
+		mnSetting.add(mntmExit);
 		
-		JMenu mnNewMenu_1 = new JMenu("New menu");
-		menuBar.add(mnNewMenu_1);
+		JMenu mnCollaterals = new JMenu("Collaterals");
+		mnCollaterals.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Collaterals.png")));
+		menuBar.add(mnCollaterals);
 		
-		JMenu mnNewMenu_2 = new JMenu("New menu");
-		menuBar.add(mnNewMenu_2);
+		JMenuItem mntmAdd = new JMenuItem("Add a collateral");
+		mnCollaterals.add(mntmAdd);
 		
-		JMenu mnNewMenu_3 = new JMenu("Help");
-		menuBar.add(mnNewMenu_3);
+		JMenuItem mntmDelete = new JMenuItem("Delete collaterals");
+		mnCollaterals.add(mntmDelete);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("About us");
-		mnNewMenu_3.add(mntmNewMenuItem_2);
+		JMenu mnNewMenu = new JMenu("New menu");
+		menuBar.add(mnNewMenu);
+		
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("About us");
+		AboutUsListener aul = new AboutUsListener();
+		mntmNewMenuItem.addActionListener(aul);
+		mnHelp.add(mntmNewMenuItem);
+		desktopPane.setBounds(0, 56, 1012, 666);
+		contentPane.add(desktopPane);
+		setLocationRelativeTo(null);
+		
 	}
 	
 	class ChangePasswordListener implements ActionListener {
@@ -102,6 +119,13 @@ public class GUICustomersInterface extends JFrame {
 	class ExitListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
+		}
+	}
+	
+	class AboutUsListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(null, "Bofeng Liu,    bofeng96@bu.edu", 
+					"About us", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	

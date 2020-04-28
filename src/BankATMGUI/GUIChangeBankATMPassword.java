@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import BankATMDAO.*;
+import java.awt.Color;
 
 public class GUIChangeBankATMPassword extends GUIChangePassword {
 
@@ -27,6 +28,8 @@ public class GUIChangeBankATMPassword extends GUIChangePassword {
 	private JLabel lblUsername;
 	private JLabel lblPassword;
 	private JPasswordField passwordField_1;
+	private JLabel lblCurrentUser;
+	private JLabel lblCurrentUsername;
 	
 	/**
 	 * Create the frame.
@@ -41,14 +44,15 @@ public class GUIChangeBankATMPassword extends GUIChangePassword {
 		contentPane.setLayout(null);
 		
 		JLabel lblHeadline = new JLabel("<html>\r\nPlease enter your new password twice.\r\n</html>");
-		lblHeadline.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		lblHeadline.setBounds(194, 28, 420, 100);
+		lblHeadline.setForeground(new Color(255, 0, 0));
+		lblHeadline.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		lblHeadline.setBounds(175, 11, 487, 66);
 		contentPane.add(lblHeadline);
 		
 		passwordField_2 = new JPasswordField();
 		passwordField_2.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField_2.setFont(new Font("Consolas", Font.PLAIN, 20));
-		passwordField_2.setBounds(280, 322, 290, 60);
+		passwordField_2.setBounds(300, 322, 290, 60);
 		contentPane.add(passwordField_2);
 		
 		JButton btnBack = new JButton("Back");
@@ -70,16 +74,27 @@ public class GUIChangeBankATMPassword extends GUIChangePassword {
 		lblUsername.setBounds(80, 206, 160, 40);
 		contentPane.add(lblUsername);
 		
-		lblPassword = new JLabel("New password: ");
+		lblPassword = new JLabel("Confirm password: ");
 		lblPassword.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblPassword.setBounds(80, 332, 160, 40);
+		lblPassword.setBounds(80, 332, 210, 40);
 		contentPane.add(lblPassword);
 		
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField_1.setFont(new Font("Consolas", Font.PLAIN, 20));
-		passwordField_1.setBounds(280, 196, 290, 60);
+		passwordField_1.setBounds(300, 200, 290, 60);
 		contentPane.add(passwordField_1);
+		
+		lblCurrentUser = new JLabel("Current User: ");
+		lblCurrentUser.setFont(new Font("Consolas", Font.BOLD, 20));
+		lblCurrentUser.setBounds(81, 119, 160, 40);
+		contentPane.add(lblCurrentUser);
+		
+		lblCurrentUsername = new JLabel(username);
+		lblCurrentUsername.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCurrentUsername.setFont(new Font("Consolas", Font.BOLD, 20));
+		lblCurrentUsername.setBounds(306, 119, 232, 40);
+		contentPane.add(lblCurrentUsername);
 	}
 
 	class BackListener implements ActionListener {
