@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import BankATMDAO.*;
 import java.awt.Color;
 
-public class GUIChangeBankATMPassword extends GUIChangePassword {
+public class GUIChangeBankATMPassword extends GUIInternalWindow {
 
 	private String username;
 	private JPanel contentPane;
@@ -37,6 +37,7 @@ public class GUIChangeBankATMPassword extends GUIChangePassword {
 	public GUIChangeBankATMPassword(String username) {
 		super();
 		this.username = username;
+		this.setTitle("Change password");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -66,7 +67,7 @@ public class GUIChangeBankATMPassword extends GUIChangePassword {
 		contentPane.add(btnBack);
 		
 		btnChange = new JButton("Change");
-		SignInListener sil = new SignInListener();
+		ChangeListener sil = new ChangeListener();
 		btnChange.addActionListener(sil);
 		btnChange.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnChange.setBounds(81, 443, 270, 60);
@@ -106,7 +107,7 @@ public class GUIChangeBankATMPassword extends GUIChangePassword {
 		}
 	}
 	
-	class SignInListener implements ActionListener {
+	class ChangeListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
 			try {
 				String strPassword_1 = String.valueOf(passwordField_1.getPassword());
@@ -127,9 +128,9 @@ public class GUIChangeBankATMPassword extends GUIChangePassword {
 					}
 					else {
 						Database.changePassword(username, strPassword_1);
+						JOptionPane.showMessageDialog(null, "Password changed!", 
+								"", JOptionPane.INFORMATION_MESSAGE);
 						setVisible(false);
-						GUICustomersInterface frame = new GUICustomersInterface(username);
-						frame.setVisible(true);
 					}
 				}
 				else {

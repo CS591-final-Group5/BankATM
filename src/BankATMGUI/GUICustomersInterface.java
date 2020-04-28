@@ -71,6 +71,8 @@ public class GUICustomersInterface extends JFrame {
 		menuBar.add(mnCollaterals);
 		
 		JMenuItem mntmAdd = new JMenuItem("Add a collateral");
+		AddListener al = new AddListener();
+		mntmAdd.addActionListener(al);
 		mnCollaterals.add(mntmAdd);
 		
 		JMenuItem mntmDelete = new JMenuItem("Delete collaterals");
@@ -82,20 +84,31 @@ public class GUICustomersInterface extends JFrame {
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("About us");
+		JMenuItem mntmHelp = new JMenuItem("About us");
 		AboutUsListener aul = new AboutUsListener();
-		mntmNewMenuItem.addActionListener(aul);
-		mnHelp.add(mntmNewMenuItem);
+		mntmHelp.addActionListener(aul);
+		mnHelp.add(mntmHelp);
 		desktopPane.setBounds(0, 56, 1012, 666);
 		contentPane.add(desktopPane);
 		
 		setLocationRelativeTo(null);
 	}
 	
+	class AddListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				GUIAddCollateral frame = new GUIAddCollateral(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
 	class ChangePasswordListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
-				// setVisible(false);
 				GUIChangeBankATMPassword frame = new GUIChangeBankATMPassword(username);
 				frame.setVisible(true);
 				desktopPane.add(frame);

@@ -55,9 +55,11 @@ GUIBankATM
 -  GUIUserLogin
     -  GUIUserBankManagerLogin
     -  GUIUserCustomersLogin
--  GUIChangePassword
+-  GUIInternalWindow
     -  GUIChangeBankSystemPassword
     -  GUIChangeCardsPassword
+    -  GUIAddCollateral
+    -  GUIDisplayCollateral
 -  GUI****
 -  GUIDailyReport
 -  GUIStockMarket  

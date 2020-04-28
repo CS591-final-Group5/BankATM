@@ -41,22 +41,23 @@ public class GUIBankManagerLogin extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblHeadline = new JLabel("<html>\r\nHi, Christine<br>\r\nYour username is BMcpk<br>\r\nYour default password is CS591<br>\r\n</html>");
+		lblHeadline.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeadline.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		lblHeadline.setBounds(234, 27, 307, 120);
+		lblHeadline.setBounds(153, 27, 509, 120);
 		contentPane.add(lblHeadline);
 		
 		textUsername = new JTextField();
 		textUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		textUsername.setFont(new Font("Consolas", Font.PLAIN, 20));
 		textUsername.setToolTipText("");
-		textUsername.setBounds(240, 196, 290, 60);
+		textUsername.setBounds(300, 196, 290, 60);
 		contentPane.add(textUsername);
 		textUsername.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setFont(new Font("Consolas", Font.PLAIN, 20));
-		passwordField.setBounds(240, 322, 290, 60);
+		passwordField.setBounds(300, 322, 290, 60);
 		contentPane.add(passwordField);
 		
 		JButton btnBack = new JButton("Back");
@@ -75,12 +76,12 @@ public class GUIBankManagerLogin extends JFrame {
 		
 		lblUsername = new JLabel("Username: ");
 		lblUsername.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblUsername.setBounds(100, 206, 110, 40);
+		lblUsername.setBounds(110, 206, 160, 40);
 		contentPane.add(lblUsername);
 		
 		lblPassword = new JLabel("Password: ");
 		lblPassword.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblPassword.setBounds(100, 332, 110, 40);
+		lblPassword.setBounds(110, 332, 160, 40);
 		contentPane.add(lblPassword);
 	}
 	

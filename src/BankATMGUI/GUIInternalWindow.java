@@ -8,12 +8,12 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class GUIChangePassword extends JInternalFrame {
+public class GUIInternalWindow extends JInternalFrame {
 
 	/**
 	 * Create the frame.
 	 */
-	public GUIChangePassword() {
+	public GUIInternalWindow() {
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); Commented for iconifiable
 		setBounds(100, 100, 800, 600);
 	}

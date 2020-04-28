@@ -51,14 +51,14 @@ public class GUICustomersLogin extends JFrame {
 		textUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		textUsername.setFont(new Font("Consolas", Font.PLAIN, 20));
 		textUsername.setToolTipText("");
-		textUsername.setBounds(240, 196, 290, 60);
+		textUsername.setBounds(300, 196, 290, 60);
 		contentPane.add(textUsername);
 		textUsername.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setFont(new Font("Consolas", Font.PLAIN, 20));
-		passwordField.setBounds(240, 322, 290, 60);
+		passwordField.setBounds(300, 322, 290, 60);
 		contentPane.add(passwordField);
 		
 		JButton btnBack = new JButton("Back");
@@ -77,12 +77,12 @@ public class GUICustomersLogin extends JFrame {
 		
 		lblUsername = new JLabel("Username: ");
 		lblUsername.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblUsername.setBounds(80, 206, 110, 40);
+		lblUsername.setBounds(100, 206, 200, 40);
 		contentPane.add(lblUsername);
 		
 		lblPassword = new JLabel("Password: ");
 		lblPassword.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblPassword.setBounds(80, 332, 110, 40);
+		lblPassword.setBounds(100, 332, 200, 40);
 		contentPane.add(lblPassword);
 	}
 

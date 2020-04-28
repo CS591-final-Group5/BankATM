@@ -12,6 +12,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class GUIHomepage extends JFrame {
 
@@ -30,9 +31,10 @@ public class GUIHomepage extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Welcome to BankATM System!");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
 		lblNewLabel.setForeground(new Color(255, 0, 0));
-		lblNewLabel.setBounds(220, 41, 360, 60);
+		lblNewLabel.setBounds(100, 41, 582, 60);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnBMLogin = new JButton("Bank Manager Login");
