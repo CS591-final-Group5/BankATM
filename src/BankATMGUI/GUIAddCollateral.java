@@ -61,7 +61,7 @@ public class GUIAddCollateral extends GUIInternalWindow {
 		
 		btnAdd = new JButton("Add");
 		AddListener al = new AddListener();
-		btnBack.addActionListener(al);
+		btnAdd.addActionListener(al);
 		btnAdd.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnAdd.setBounds(81, 443, 270, 60);
 		contentPane.add(btnAdd);
@@ -101,20 +101,18 @@ public class GUIAddCollateral extends GUIInternalWindow {
 					break;
 				}
 			}
+			if (strCollateral.length() == 0) {
+				invalid = true;
+			}
 			if (invalid) {
 				JOptionPane.showMessageDialog(null, "Invalid character", 
 						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 			}
 			else {
-				if (strCollateral.length() != 0) {
-					Database.addCollateral(username, strCollateral);
-					JOptionPane.showMessageDialog(null, "Data added successfully", 
-							"", JOptionPane.INFORMATION_MESSAGE);
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Invalid input", 
-							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
-				}
+				Database.addCollateral(username, strCollateral);
+				JOptionPane.showMessageDialog(null, "Data added successfully", 
+						"sds", JOptionPane.INFORMATION_MESSAGE);
+				setVisible(false);
 			}
 			textField.setText("");
 		}
