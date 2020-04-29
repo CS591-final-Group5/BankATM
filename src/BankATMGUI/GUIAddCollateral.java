@@ -3,6 +3,8 @@ package BankATMGUI;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -12,12 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import BankATMDAO.Database;
-
 import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import BankATMDAO.*;
 
 public class GUIAddCollateral extends GUIInternalWindow {
 
@@ -109,7 +108,9 @@ public class GUIAddCollateral extends GUIInternalWindow {
 						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 			}
 			else {
-				Database.addCollateral(username, strCollateral);
+				CollateralDAO collateralDAO = new CollateralDAO();
+				collateralDAO.addCollateral(username, strCollateral);
+				collateralDAO.closeConn();
 				JOptionPane.showMessageDialog(null, "Data added successfully", 
 						"sds", JOptionPane.INFORMATION_MESSAGE);
 				setVisible(false);

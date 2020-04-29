@@ -71,15 +71,23 @@ public class GUICustomersInterface extends JFrame {
 		menuBar.add(mnCollaterals);
 		
 		JMenuItem mntmAdd = new JMenuItem("Add a collateral");
+		mntmAdd.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Add.png")));
 		AddListener al = new AddListener();
 		mntmAdd.addActionListener(al);
 		mnCollaterals.add(mntmAdd);
 		
 		JMenuItem mntmDelete = new JMenuItem("Delete collaterals");
+		DeleteListener dl = new DeleteListener();
+		mntmDelete.addActionListener(dl);
+		mntmDelete.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Delete.png")));
 		mnCollaterals.add(mntmDelete);
 		
-		JMenu mnNewMenu = new JMenu("New menu");
-		menuBar.add(mnNewMenu);
+		JMenu mnStockMarket = new JMenu("StockMarket");
+		mnStockMarket.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/StockMarket.png")));
+		menuBar.add(mnStockMarket);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Open stock market");
+		mnStockMarket.add(mntmNewMenuItem);
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -98,6 +106,18 @@ public class GUICustomersInterface extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				GUIAddCollateral frame = new GUIAddCollateral(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class DeleteListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				GUIDeleteCollateral frame = new GUIDeleteCollateral(username);
 				frame.setVisible(true);
 				desktopPane.add(frame);
 			} catch (Exception ex) {

@@ -198,34 +198,4 @@ public class Database {
 		
 	}
 	
-	public static void addCollateral(String username, String collateral) {
-		try {
-			Class.forName(JDBC);
-			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
-			Statement stmt = conn.createStatement();
-			
-			boolean repeated = true;
-			int cid = 0;
-			do {
-				cid = (int) ((Math.random() * 9 + 1) * 100000);
-				String  sql_1 = "select * FROM collaterals where cid='" + 
-				                String.valueOf(cid) + "'";
-	            ResultSet res = stmt.executeQuery(sql_1);
-	            if(res.next() == false){
-	            	repeated = false;
-	            }
-			} while (repeated);
-
-			String sql_2 = "insert into collaterals " + 
-					     "values ('" + username + "', '" +
-					     String.valueOf(cid) + "', '" + 
-					     collateral + "')";
-            stmt.executeUpdate(sql_2);
-            conn.close();
-            stmt.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 }
