@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
@@ -12,8 +14,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import BankATMCommon.Collaterals;
+
 import javax.swing.JTextField;
 
 import BankATMDAO.*;
@@ -23,10 +31,11 @@ public class GUIAddCollateral extends GUIInternalWindow {
 	private String username;
 	private JPanel contentPane;
 	private JButton btnAdd;
-	private JLabel lblUsername;
+	private JLabel lblDesc;
 	private JLabel lblCurrentUser;
 	private JLabel lblCurrentUsername;
 	private JTextField textField;
+	private JTable collateralTable;
 	
 	/**
 	 * Create the frame.
@@ -62,31 +71,56 @@ public class GUIAddCollateral extends GUIInternalWindow {
 		AddListener al = new AddListener();
 		btnAdd.addActionListener(al);
 		btnAdd.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnAdd.setBounds(81, 443, 270, 60);
+		btnAdd.setBounds(459, 212, 270, 60);
 		contentPane.add(btnAdd);
 		
-		lblUsername = new JLabel("Name of collateral: ");
-		lblUsername.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblUsername.setBounds(90, 265, 271, 40);
-		contentPane.add(lblUsername);
+		lblDesc = new JLabel("Description of a new collateral: ");
+		lblDesc.setFont(new Font("Consolas", Font.BOLD, 20));
+		lblDesc.setBounds(90, 390, 444, 40);
+		contentPane.add(lblDesc);
 		
 		lblCurrentUser = new JLabel("Current User: ");
 		lblCurrentUser.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblCurrentUser.setBounds(90, 130, 206, 40);
+		lblCurrentUser.setBounds(90, 90, 206, 40);
 		contentPane.add(lblCurrentUser);
 		
 		lblCurrentUsername = new JLabel(username);
 		lblCurrentUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentUsername.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblCurrentUsername.setBounds(340, 130, 232, 40);
+		lblCurrentUsername.setBounds(340, 90, 232, 40);
 		contentPane.add(lblCurrentUsername);
 		
 		textField = new JTextField();
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
 		textField.setFont(new Font("Consolas", Font.PLAIN, 20));
-		textField.setBounds(350, 250, 290, 60);
+		textField.setBounds(88, 448, 290, 60);
 		contentPane.add(textField);
 		textField.setColumns(10);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(90, 160, 300, 220);
+		contentPane.add(scrollPane);
+		
+		collateralTable = new JTable();
+		collateralTable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"CID", "Description"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane.setViewportView(collateralTable);
+		
+		CollateralDAO collateralDAO = new CollateralDAO();
+		setTable(collateralDAO.getCollaterals(username));
+		collateralDAO.closeConn();
 	}
 	
 	class AddListener implements ActionListener {
@@ -110,12 +144,24 @@ public class GUIAddCollateral extends GUIInternalWindow {
 			else {
 				CollateralDAO collateralDAO = new CollateralDAO();
 				collateralDAO.addCollateral(username, strCollateral);
+				setTable(collateralDAO.getCollaterals(username));
 				collateralDAO.closeConn();
 				JOptionPane.showMessageDialog(null, "Data added successfully", 
 						"sds", JOptionPane.INFORMATION_MESSAGE);
-				setVisible(false);
+				// setVisible(false);
 			}
 			textField.setText("");
+		}
+	}
+	
+	private void setTable(ArrayList<Collaterals> collaterals) {
+		DefaultTableModel dtm = (DefaultTableModel) collateralTable.getModel();
+		dtm.setRowCount(0);
+		for (Collaterals c: collaterals) {
+			Vector v = new Vector();
+			v.add(c.getCid());
+			v.add(c.getDescription());
+			dtm.addRow(v);
 		}
 	}
 	

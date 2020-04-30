@@ -7,6 +7,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -30,7 +32,8 @@ public class GUIDeleteCollateral extends GUIInternalWindow {
 
 	private String username;
 	private JPanel contentPane;
-	private JButton btnAdd;
+	private JButton btnDelete;
+	private JButton btnBack;
 	private JTable collateralTable;
 	
 	/**
@@ -56,17 +59,19 @@ public class GUIDeleteCollateral extends GUIInternalWindow {
 		lblHeadline.setBounds(60, 11, 669, 66);
 		contentPane.add(lblHeadline);
 		
-		JButton btnBack = new JButton("Back");
+		btnBack = new JButton("Back");
 		BackListener bl = new BackListener();
 		btnBack.addActionListener(bl);
 		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnBack.setBounds(459, 443, 270, 60);
 		contentPane.add(btnBack);
 		
-		btnAdd = new JButton("Add");
-		btnAdd.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnAdd.setBounds(81, 443, 270, 60);
-		contentPane.add(btnAdd);
+		btnDelete = new JButton("Delete selected row");
+		DeleteListener dl = new DeleteListener();
+		btnDelete.addActionListener(dl);
+		btnDelete.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		btnDelete.setBounds(459, 262, 270, 60);
+		contentPane.add(btnDelete);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(90, 160, 300, 220);
@@ -89,6 +94,9 @@ public class GUIDeleteCollateral extends GUIInternalWindow {
 		});
 		scrollPane.setViewportView(collateralTable);
 		
+		TableClickAdapter tca = new TableClickAdapter();
+		collateralTable.addMouseListener(tca);
+		
 		JLabel lblCurrentUser = new JLabel("Current User: ");
 		lblCurrentUser.setFont(new Font("Consolas", Font.BOLD, 20));
 		lblCurrentUser.setBounds(106, 85, 206, 40);
@@ -100,35 +108,59 @@ public class GUIDeleteCollateral extends GUIInternalWindow {
 		lblCurrentUsername.setBounds(356, 85, 232, 40);
 		contentPane.add(lblCurrentUsername);
 		
-		JButton btnRefresh = new JButton("Display/Refresh list");
-		RefreshListener rl = new RefreshListener();
-		btnRefresh.addActionListener(rl);
-		btnRefresh.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnRefresh.setBounds(459, 170, 270, 60);
-		contentPane.add(btnRefresh);
+		CollateralDAO collateralDAO = new CollateralDAO();
+		setTable(collateralDAO.getCollaterals(username));
+		collateralDAO.closeConn();
 	}
 	
 	private void setTable(ArrayList<Collaterals> collaterals) {
-		DefaultTableModel dfm = (DefaultTableModel) collateralTable.getModel();
-		dfm.setRowCount(0);
+		DefaultTableModel dtm = (DefaultTableModel) collateralTable.getModel();
+		dtm.setRowCount(0);
 		for (Collaterals c: collaterals) {
 			Vector v = new Vector();
 			v.add(c.getCid());
 			v.add(c.getDescription());
-			dfm.addRow(v);
-		}
-	}
-	
-	class RefreshListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			CollateralDAO collateralDAO = new CollateralDAO();
-			setTable(collateralDAO.getCollaterals(username));
+			dtm.addRow(v);
 		}
 	}
 	
 	class BackListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			setVisible(false);
+		}
+	}
+	
+	class DeleteListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			int idx = collateralTable.getSelectedRow();
+			if (idx == -1) {
+				JOptionPane.showMessageDialog(null, "Please select the collateral that you want to delete");
+				return;
+			}
+			DefaultTableModel dtm = (DefaultTableModel) collateralTable.getModel();
+			String cid = dtm.getValueAt(idx, 0).toString();
+			CollateralDAO collateralDAO = new CollateralDAO();
+			if (collateralDAO.deleteCollateral(cid)) {
+				JOptionPane.showMessageDialog(null, "Successfully deleted!");
+				// Refresh table
+				setTable(collateralDAO.getCollaterals(username));
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Failed to delete this collateral!");
+			}
+			collateralDAO.closeConn();
+		}
+	}
+	
+	private void selectedRow(MouseEvent e) {
+		DefaultTableModel dtm = (DefaultTableModel) collateralTable.getModel();
+		
+	}
+	
+	class TableClickAdapter extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			selectedRow(e);
 		}
 	}
 	

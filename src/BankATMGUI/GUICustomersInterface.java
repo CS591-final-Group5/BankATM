@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JToolBar;
@@ -82,6 +83,18 @@ public class GUICustomersInterface extends JFrame {
 		mntmDelete.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Delete.png")));
 		mnCollaterals.add(mntmDelete);
 		
+		JMenu mnCards = new JMenu("Cards");
+		mnCards.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Cards.png")));
+		menuBar.add(mnCards);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Create a checking account");
+		mntmNewMenuItem_1.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/CheckingAccount .png")));
+		mnCards.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Create a savings account");
+		mntmNewMenuItem_2.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/SavingsAccount.png")));
+		mnCards.add(mntmNewMenuItem_2);
+		
 		JMenu mnStockMarket = new JMenu("StockMarket");
 		mnStockMarket.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/StockMarket.png")));
 		menuBar.add(mnStockMarket);
@@ -105,6 +118,11 @@ public class GUICustomersInterface extends JFrame {
 	class AddListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
+				// close all sub-windows inside current window 
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
 				GUIAddCollateral frame = new GUIAddCollateral(username);
 				frame.setVisible(true);
 				desktopPane.add(frame);
@@ -117,6 +135,10 @@ public class GUICustomersInterface extends JFrame {
 	class DeleteListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
 				GUIDeleteCollateral frame = new GUIDeleteCollateral(username);
 				frame.setVisible(true);
 				desktopPane.add(frame);
@@ -162,5 +184,4 @@ public class GUICustomersInterface extends JFrame {
 					"About us", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
-	
 }

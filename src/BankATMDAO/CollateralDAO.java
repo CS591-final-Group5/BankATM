@@ -81,4 +81,17 @@ public class CollateralDAO extends Database {
 		return collaterals;
 	}
 	
+	public boolean deleteCollateral(String cid) {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "delete from collaterals where cid='" + cid + "'";
+			if (stmt.executeUpdate(sql) > 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 }
