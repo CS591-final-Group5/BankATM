@@ -59,8 +59,9 @@ GUIBankATM
     -  GUIChangeBankSystemPassword
     -  GUIChangeCardsPassword
     -  GUIAddCollateral
-    -  GUIDisplayCollateral # these two should be combined
-    -  GUICreateAccounts
+    -  GUIDeleteCollateral
+    -  GUIOpenAccounts
+    -  GUICloseAccounts
 -  GUI****
 -  GUIDailyReport
 -  GUIStockMarket  
