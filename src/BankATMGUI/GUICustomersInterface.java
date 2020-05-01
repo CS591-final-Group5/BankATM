@@ -87,13 +87,17 @@ public class GUICustomersInterface extends JFrame {
 		mnCards.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Cards.png")));
 		menuBar.add(mnCards);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Create a checking account");
-		mntmNewMenuItem_1.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/CheckingAccount .png")));
-		mnCards.add(mntmNewMenuItem_1);
+		JMenuItem mntmOpenAccounts = new JMenuItem("Open a account");
+		OpenAccountsListener oal = new OpenAccountsListener();
+		mntmOpenAccounts.addActionListener(oal);
+		mntmOpenAccounts.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/SavingsAccount.png")));
+		mnCards.add(mntmOpenAccounts);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Create a savings account");
-		mntmNewMenuItem_2.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/SavingsAccount.png")));
-		mnCards.add(mntmNewMenuItem_2);
+		JMenuItem mntmCloseAccounts = new JMenuItem("Close accounts");
+		CloseAccountsListener cal = new CloseAccountsListener();
+		mntmCloseAccounts.addActionListener(cal);
+		mntmCloseAccounts.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/CheckingAccount .png")));
+		mnCards.add(mntmCloseAccounts);
 		
 		JMenu mnStockMarket = new JMenu("StockMarket");
 		mnStockMarket.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/StockMarket.png")));
@@ -113,6 +117,38 @@ public class GUICustomersInterface extends JFrame {
 		contentPane.add(desktopPane);
 		
 		setLocationRelativeTo(null);
+	}
+	
+	class OpenAccountsListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUIOpenAccounts frame = new GUIOpenAccounts(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class CloseAccountsListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUICloseAccounts frame = new GUICloseAccounts(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 	
 	class AddListener implements ActionListener {
@@ -151,6 +187,10 @@ public class GUICustomersInterface extends JFrame {
 	class ChangePasswordListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
 				GUIChangeBankATMPassword frame = new GUIChangeBankATMPassword(username);
 				frame.setVisible(true);
 				desktopPane.add(frame);

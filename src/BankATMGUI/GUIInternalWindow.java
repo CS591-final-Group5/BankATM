@@ -15,7 +15,7 @@ public class GUIInternalWindow extends JInternalFrame {
 	 */
 	public GUIInternalWindow() {
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); Commented for iconifiable
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 50, 800, 600);
 	}
 
 }

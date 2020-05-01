@@ -59,12 +59,13 @@ GUIBankATM
     -  GUIChangeBankSystemPassword
     -  GUIChangeCardsPassword
     -  GUIAddCollateral
-    -  GUIDisplayCollateral
+    -  GUIDisplayCollateral # these two should be combined
+    -  GUICreateAccounts
 -  GUI****
 -  GUIDailyReport
 -  GUIStockMarket  
 
 
 ### Tips
-The bank manager's account can only be used in BankManagerLogin page. You can create a customer account that has the same username as the name manager's account.
-
+1.The bank manager's account can only be used in BankManagerLogin page. You can create a customer account that has the same username as the name manager's account.
+2.Username and password can only contain digits or letters.

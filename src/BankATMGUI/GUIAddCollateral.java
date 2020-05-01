@@ -1,28 +1,14 @@
 package BankATMGUI;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Vector;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import javax.swing.JButton;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.util.*;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BankATMCommon.Collaterals;
-
-import javax.swing.JTextField;
 
 import BankATMDAO.*;
 
@@ -138,7 +124,7 @@ public class GUIAddCollateral extends GUIInternalWindow {
 				invalid = true;
 			}
 			if (invalid) {
-				JOptionPane.showMessageDialog(null, "Invalid character", 
+				JOptionPane.showMessageDialog(null, "Invalid character!", 
 						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 			}
 			else {
@@ -146,8 +132,7 @@ public class GUIAddCollateral extends GUIInternalWindow {
 				collateralDAO.addCollateral(username, strCollateral);
 				setTable(collateralDAO.getCollaterals(username));
 				collateralDAO.closeConn();
-				JOptionPane.showMessageDialog(null, "Data added successfully", 
-						"sds", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Data added successfully!");
 				// setVisible(false);
 			}
 			textField.setText("");

@@ -70,7 +70,7 @@ public class GUIDeleteCollateral extends GUIInternalWindow {
 		DeleteListener dl = new DeleteListener();
 		btnDelete.addActionListener(dl);
 		btnDelete.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnDelete.setBounds(459, 262, 270, 60);
+		btnDelete.setBounds(459, 205, 270, 60);
 		contentPane.add(btnDelete);
 		
 		JScrollPane scrollPane = new JScrollPane();

@@ -76,7 +76,9 @@ public class Database {
 				String sql_3 = "create table accounts (" +
 					           "username varchar(255) not null, " +
 					           "accountnumber varchar(255) not null, " +
+					           "password varchar(255) not null, " +
 					           "balance double, " + 
+					           "type varchar(255) not null, " +
 					           "primary key( accountnumber ))";
 				stmtDB.executeUpdate(sql_3);
 				/*
@@ -115,7 +117,7 @@ public class Database {
 			Class.forName(JDBC);
 			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
 			Statement stmt = conn.createStatement();
-			String  sql = "select * FROM users where username='" + username + "'";
+			String  sql = "select * from users where username='" + username + "'";
             ResultSet res = stmt.executeQuery(sql);
             if(res.next() == false){
             	// check if res == null
@@ -151,7 +153,7 @@ public class Database {
 			Class.forName(JDBC);
 			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
 			Statement stmt = conn.createStatement();
-			String sql = "select * FROM users where username='" + username + "'";
+			String sql = "select * from users where username='" + username + "'";
 			ResultSet res = stmt.executeQuery(sql);
 			if(res.next() == false){
 				res.close();
