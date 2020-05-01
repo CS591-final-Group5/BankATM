@@ -15,18 +15,19 @@ package BankATMCommon;
 
 public class Currencies implements ConvertCurrency {
 
-	protected String abbr;
 	protected double amount;
 	
-	public Currencies(String abbr, double amount) {
-		this.abbr = abbr;
+	public Currencies(double amount) {
 		this.amount = amount;
 	}
 
 	@Override
-	public void convert() {
-		// TODO Auto-generated method stub
-		
+	public void convert(double param) {
+		amount *= param;
+	}
+	
+	public double getAmount() {
+		return amount;
 	}
 	
 }

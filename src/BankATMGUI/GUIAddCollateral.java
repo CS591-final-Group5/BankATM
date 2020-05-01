@@ -115,7 +115,7 @@ public class GUIAddCollateral extends GUIInternalWindow {
 			boolean invalid = false;
 			for (int i = 0; i < strCollateral.length(); i ++) {
 				char c = strCollateral.charAt(i);
-				if (!Character.isLetterOrDigit(c)) {
+				if (!Character.isLetterOrDigit(c) && c != ' ') {
 					invalid = true;
 					break;
 				}

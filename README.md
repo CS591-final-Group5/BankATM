@@ -62,9 +62,11 @@ GUIBankATM
     -  GUIDeleteCollateral
     -  GUIOpenAccounts
     -  GUICloseAccounts
--  GUI****
--  GUIDailyReport
--  GUIStockMarket  
+    -  GUIDepositOrWithdrawal
+        -  GUIDeposit
+        -  GUIWithdrawal
+    -  GUIDailyReport
+    -  GUIStockMarket  
 
 
 ### Tips

@@ -154,7 +154,8 @@ public class GUIDeleteCollateral extends GUIInternalWindow {
 	
 	private void selectedRow(MouseEvent e) {
 		DefaultTableModel dtm = (DefaultTableModel) collateralTable.getModel();
-		
+		//huoqu xuanzhong kuang de zhi
+		//13 20:48
 	}
 	
 	class TableClickAdapter extends MouseAdapter {

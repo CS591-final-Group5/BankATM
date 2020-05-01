@@ -98,4 +98,63 @@ public class AccountDAO extends Database {
 		return accounts;
 	}
 	
+	public boolean authenticate(String accountNumber, String password) {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from accounts where accountnumber='" + accountNumber + "'";
+			ResultSet res = stmt.executeQuery(sql);
+			if(res.next() == false){
+				res.close();
+	            stmt.close();
+	            return false;
+			}
+			else {
+				String strPassword = res.getString("password");
+				if (strPassword.compareTo(password) == 0) {
+					res.close();
+		            stmt.close();
+					return true;
+				}
+				else {
+					res.close();
+		            stmt.close();
+		            return false;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean depositMoney(String accountNumber, double amount) {
+		/*
+		 * deposit: amount > 0
+		 * withdrawal: amount < 0
+		 */
+		try {
+			Statement stmt = conn.createStatement();
+			String sql_1 = "select * from accounts where accountnumber='" + accountNumber + "'";
+			ResultSet res = stmt.executeQuery(sql_1);
+			if(res.next() == false){
+				res.close();
+	            stmt.close();
+	            return false;
+			}
+			else {
+				double balance = res.getDouble("balance");
+				balance += amount;
+				String sql_2 = "update accounts set balance=" + String.valueOf(balance) +
+						" where accountnumber='" + accountNumber + "'";
+				stmt.executeUpdate(sql_2);
+				res.close();
+	            stmt.close();
+	            return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 }

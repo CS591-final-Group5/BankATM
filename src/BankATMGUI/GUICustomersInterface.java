@@ -99,6 +99,29 @@ public class GUICustomersInterface extends JFrame {
 		mntmCloseAccounts.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/CheckingAccount .png")));
 		mnCards.add(mntmCloseAccounts);
 		
+		JMenuItem mntm = new JMenuItem("New menu item");
+		mnCards.add(mntm);
+		
+		JMenu mnTransactions = new JMenu("Transactions");
+		mnTransactions.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Transactions.png")));
+		menuBar.add(mnTransactions);
+		
+		JMenuItem mntmDeposit = new JMenuItem("Deposit");
+		DepositListener dpl = new DepositListener();
+		mntmDeposit.addActionListener(dpl);
+		mntmDeposit.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Deposit.png")));
+		mnTransactions.add(mntmDeposit);
+		
+		JMenuItem mntmWithdrawal = new JMenuItem("Withdrawal");
+		WithdrawalListener wdl = new WithdrawalListener();
+		mntmWithdrawal.addActionListener(wdl);
+		mntmWithdrawal.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Withdrawal.png")));
+		mnTransactions.add(mntmWithdrawal);
+		
+		JMenuItem mntmLoan = new JMenuItem("Loan");
+		mntmLoan.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Loans.png")));
+		mnTransactions.add(mntmLoan);
+		
 		JMenu mnStockMarket = new JMenu("StockMarket");
 		mnStockMarket.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/StockMarket.png")));
 		menuBar.add(mnStockMarket);
@@ -176,6 +199,38 @@ public class GUICustomersInterface extends JFrame {
 					jf.setVisible(false);
 				}
 				GUIDeleteCollateral frame = new GUIDeleteCollateral(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class DepositListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUIDeposit frame = new GUIDeposit(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class WithdrawalListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUIWithdrawal frame = new GUIWithdrawal(username);
 				frame.setVisible(true);
 				desktopPane.add(frame);
 			} catch (Exception ex) {

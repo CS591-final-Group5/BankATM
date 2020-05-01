@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 
 import BankATMCommon.*;
 import BankATMDAO.*;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class GUICloseAccounts extends GUIInternalWindow {
 
@@ -23,6 +25,8 @@ public class GUICloseAccounts extends GUIInternalWindow {
 	private JButton btnBack;
 	private JButton btnClose;
 	private JTable accountsTable;
+	private JScrollPane scrollPane;
+	private String currencyType = "USD"; // default
 	
 	/**
 	 * Create the frame.
@@ -70,7 +74,7 @@ public class GUICloseAccounts extends GUIInternalWindow {
 		btnClose.setBounds(459, 205, 270, 60);
 		contentPane.add(btnClose);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(70, 170, 340, 254);
 		contentPane.add(scrollPane);
 		
@@ -93,9 +97,30 @@ public class GUICloseAccounts extends GUIInternalWindow {
 		accountsTable.getColumnModel().getColumn(1).setPreferredWidth(72);
 		scrollPane.setViewportView(accountsTable);
 		
+		JComboBox comboBox = new JComboBox();
+		CurrencyTypeListener ctl = new CurrencyTypeListener();
+		comboBox.addItemListener(ctl);
+		comboBox.setBackground(UIManager.getColor("Button.darkShadow"));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"USD", "CNY", "RUB"}));
+		comboBox.setFont(new Font("Consolas", Font.PLAIN, 20));
+		comboBox.setBounds(70, 136, 160, 30);
+		contentPane.add(comboBox);
+		
 		AccountDAO accountDAO = new AccountDAO();
 		setTable(accountDAO.getAccounts(username));
 		accountDAO.closeConn();
+	}
+	
+	class CurrencyTypeListener implements ItemListener {
+		public void itemStateChanged(ItemEvent e) {
+			JComboBox jcb = (JComboBox)e.getSource();
+			if (e.getStateChange() == ItemEvent.SELECTED) {
+				currencyType = jcb.getSelectedItem().toString();
+			}
+			AccountDAO accountDAO = new AccountDAO();
+			setTable(accountDAO.getAccounts(username));
+			accountDAO.closeConn();
+		}
 	}
 	
 	class CloseListener implements ActionListener {
@@ -120,13 +145,29 @@ public class GUICloseAccounts extends GUIInternalWindow {
 		}
 	}
 	
+	private double convertCur(double x) {
+		CurrencyUSD USD = new CurrencyUSD(x);
+		if (currencyType.compareTo(CurrencyUSD.abbr) == 0) {
+			return x;
+		}
+		else if (currencyType.compareTo(CurrencyCNY.abbr) == 0) {
+			CurrencyCNY CNY = new CurrencyCNY(USD);
+			return CNY.getAmount();
+		}
+		else if (currencyType.compareTo(CurrencyRUB.abbr) == 0) {
+			CurrencyRUB RUB = new CurrencyRUB(USD);
+			return RUB.getAmount();
+		}
+		return x;
+	}
+	
 	private void setTable(ArrayList<Accounts> accounts) {
 		DefaultTableModel dtm = (DefaultTableModel) accountsTable.getModel();
 		dtm.setRowCount(0);
 		for (Accounts c: accounts) {
 			Vector v = new Vector();
 			v.add(c.getAccountNumber());
-			v.add(c.getBalance());
+			v.add(convertCur(c.getBalance()));
 			if (c instanceof CheckingAccounts) {
 				v.add("Checking");
 			}
