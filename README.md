@@ -60,11 +60,14 @@ GUIBankATM
     -  GUIChangeCardsPassword
     -  GUIAddCollateral
     -  GUIDeleteCollateral
-    -  GUIOpenAccounts
-    -  GUICloseAccounts
+    -  GUICards (unfinished)
+        -  GUIOpenAccounts
+        -  GUICloseAccounts
+        -  GUI
     -  GUIDepositOrWithdrawal
         -  GUIDeposit
         -  GUIWithdrawal
+        -  GUILoans
     -  GUIDailyReport
     -  GUIStockMarket  
 

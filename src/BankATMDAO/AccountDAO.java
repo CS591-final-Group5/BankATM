@@ -87,6 +87,10 @@ public class AccountDAO extends Database {
 						c = new SavingsAccounts(res.getDouble("balance"), 
 								res.getString("username"), res.getString("accountnumber"));
 					}
+					else if (res.getString("type").compareTo("Securities") == 0) {
+						c = new SecuritiesAccounts(res.getDouble("balance"), 
+								res.getString("username"), res.getString("accountnumber"));
+					}
 					accounts.add(c);
 				} while(res.next());
 				res.close();

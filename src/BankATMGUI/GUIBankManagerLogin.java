@@ -102,14 +102,15 @@ public class GUIBankManagerLogin extends JFrame {
 			try {
 				String strUsername = textUsername.getText();
 				String strPassword = String.valueOf(passwordField.getPassword());
-				if (strUsername.compareTo(Database.bankMangerUsername) == 0 &&
-						strPassword.compareTo(Database.bankMangerPassword) == 0) {
+				ManagerDAO managerDAO = new ManagerDAO();
+				if (managerDAO.verification(strUsername, strPassword)) {
 					setVisible(false);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Wrong username or wrong password!", 
 							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 				}
+				managerDAO.closeConn();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

@@ -3,10 +3,7 @@ package BankATMGUI;
 import java.util.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
 
 import BankATMCommon.*;
 import BankATMDAO.*;
-import BankATMGUI.GUICloseAccounts.CurrencyTypeListener;
 
 public class GUIOpenAccounts extends GUIInternalWindow {
 
@@ -103,6 +99,7 @@ public class GUIOpenAccounts extends GUIInternalWindow {
 		contentPane.add(scrollPane);
 		
 		accountsTable = new JTable();
+		accountsTable.setFont(new Font("Consolas", Font.PLAIN, 14));
 		accountsTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -187,6 +184,8 @@ public class GUIOpenAccounts extends GUIInternalWindow {
 			AccountDAO accountDAO = new AccountDAO();
 			String accountNumber = accountDAO.openNewAccount(username, type, strPassword_1);
 			setTable(accountDAO.getAccounts(username));
+			passwordField_1.setText("");
+			passwordField_2.setText("");
 			accountDAO.closeConn();
 			JOptionPane.showMessageDialog(null, "Account created successfully!\n"
 					+ "The account number is " + accountNumber);
@@ -216,12 +215,7 @@ public class GUIOpenAccounts extends GUIInternalWindow {
 			Vector v = new Vector();
 			v.add(c.getAccountNumber());
 			v.add(convertCur(c.getBalance()));
-			if (c instanceof CheckingAccounts) {
-				v.add("Checking");
-			}
-			else if (c instanceof SavingsAccounts) {
-				v.add("Savings");
-			}
+			v.add(c.getAbbr());
 			dtm.addRow(v);
 		}
 	}

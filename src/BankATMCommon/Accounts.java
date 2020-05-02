@@ -3,14 +3,20 @@ package BankATMCommon;
 
 public class Accounts {
 	
+	private String abbr;
 	private double balance;
 	private String username;
 	private String accountNumber;
 
-	public Accounts(double balance, String username, String accountNumber) {
+	public Accounts(String abbr, double balance, String username, String accountNumber) {
+		this.abbr = abbr;
 		this.balance = balance;
 		this.username = username;
 		this.accountNumber = accountNumber;
+	}
+	
+	public String getAbbr() {
+		return abbr;
 	}
 	
 	public double getBalance() {

@@ -88,12 +88,7 @@ public class GUIDepositOrWithdrawal extends GUIInternalWindow {
 			Vector v = new Vector();
 			v.add(c.getAccountNumber());
 			v.add(convertCur(c.getBalance()));
-			if (c instanceof CheckingAccounts) {
-				v.add("Checking");
-			}
-			else if (c instanceof SavingsAccounts) {
-				v.add("Savings");
-			}
+			v.add(c.getAbbr());
 			dtm.addRow(v);
 		}
 	}

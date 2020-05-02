@@ -34,7 +34,7 @@ public class GUICloseAccounts extends GUIInternalWindow {
 	public GUICloseAccounts(String username) {
 		super();
 		this.username = username;
-		this.setTitle("Open accounts");
+		this.setTitle("Close accounts");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -71,7 +71,7 @@ public class GUICloseAccounts extends GUIInternalWindow {
 		CloseListener cl = new CloseListener();
 		btnClose.addActionListener(cl);
 		btnClose.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnClose.setBounds(459, 205, 270, 60);
+		btnClose.setBounds(460, 170, 270, 60);
 		contentPane.add(btnClose);
 		
 		scrollPane = new JScrollPane();
@@ -79,6 +79,7 @@ public class GUICloseAccounts extends GUIInternalWindow {
 		contentPane.add(scrollPane);
 		
 		accountsTable = new JTable();
+		accountsTable.setFont(new Font("Consolas", Font.PLAIN, 14));
 		accountsTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -168,12 +169,7 @@ public class GUICloseAccounts extends GUIInternalWindow {
 			Vector v = new Vector();
 			v.add(c.getAccountNumber());
 			v.add(convertCur(c.getBalance()));
-			if (c instanceof CheckingAccounts) {
-				v.add("Checking");
-			}
-			else if (c instanceof SavingsAccounts) {
-				v.add("Savings");
-			}
+			v.add(c.getAbbr());
 			dtm.addRow(v);
 		}
 	}

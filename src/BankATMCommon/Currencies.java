@@ -13,7 +13,7 @@
 
 package BankATMCommon;
 
-public class Currencies implements ConvertCurrency {
+public abstract class Currencies implements ConvertCurrency {
 
 	protected double amount;
 	

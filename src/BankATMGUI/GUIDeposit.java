@@ -3,8 +3,7 @@ package BankATMGUI;
 import java.util.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,8 +11,6 @@ import javax.swing.table.DefaultTableModel;
 
 import BankATMCommon.*;
 import BankATMDAO.*;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
 public class GUIDeposit extends GUIDepositOrWithdrawal {
 
@@ -70,6 +67,7 @@ public class GUIDeposit extends GUIDepositOrWithdrawal {
 		contentPane.add(scrollPane);
 		
 		accountsTable = new JTable();
+		accountsTable.setFont(new Font("Consolas", Font.PLAIN, 14));
 		accountsTable.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -210,7 +208,7 @@ public class GUIDeposit extends GUIDepositOrWithdrawal {
 						return;
 					}
 					double amount = convertCash(Double.valueOf(strAmount));
-					if (amount >= 10000) {
+					if (amount > 10000) {
 						JOptionPane.showMessageDialog(null, "One transaction can't exceed 10000$!", 
 								"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 						accountDAO.closeConn();

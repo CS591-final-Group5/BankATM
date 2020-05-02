@@ -12,17 +12,34 @@ import javax.swing.table.DefaultTableModel;
 import BankATMCommon.*;
 import BankATMDAO.*;
 
-public class GUIWithdrawal extends GUIDepositOrWithdrawal {
+public class GUILoans extends GUIInternalWindow {
 
-    private JButton btnWithdrawal;
+	private String username;
+	private JPanel contentPane;
+	private ButtonGroup btGroup;
+	private JLabel lblCreateANew;
+	private JLabel lblDesc;
+	private JButton btnBack;
+	private JTable accountsTable;
+	private JScrollPane scrollPane;
+	private String currencyType = "USD"; // default
+	private String cashType = "USD"; // default
+	private JTextField textField_Deposit;
+	private JComboBox comboBox_CashType;
+	private JComboBox comboBox_Type;
+	private JLabel lblNewLabel;
+	private JLabel lblAmount;
+	private JPasswordField passwordField;
+	private JLabel lblPasswordOfSpecified;
+    private JButton btnRequest;
 	
 	/**
 	 * Create the frame.
 	 */
-	public GUIWithdrawal(String username) {
+	public GUILoans(String username) {
 		super();
 		this.username = username;
-		this.setTitle("Withdrawal");
+		this.setTitle("Loans");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -32,7 +49,7 @@ public class GUIWithdrawal extends GUIDepositOrWithdrawal {
 		setClosable(true);
 		setIconifiable(true);
 		
-		lblCreateANew = new JLabel("<html>\r\nWithdrawal.\r\n</html>");
+		lblCreateANew = new JLabel("<html>\r\nRequest a Loan.\r\n</html>");
 		lblCreateANew.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCreateANew.setForeground(Color.RED);
 		lblCreateANew.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
@@ -41,7 +58,7 @@ public class GUIWithdrawal extends GUIDepositOrWithdrawal {
 		
 		btGroup = new ButtonGroup();
 		
-		lblDesc = new JLabel("<html>\r\n- Choose your account and withdrawal your money\r\n</html>");
+		lblDesc = new JLabel("<html>\r\n- Choose your account and request a loan.\r\n</html>");
 		lblDesc.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDesc.setForeground(Color.DARK_GRAY);
 		lblDesc.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
@@ -55,12 +72,12 @@ public class GUIWithdrawal extends GUIDepositOrWithdrawal {
 		btnBack.setBounds(460, 460, 270, 60);
 		contentPane.add(btnBack);
 		
-		btnWithdrawal = new JButton("Withdrawal");
+		btnRequest = new JButton("Request");
 		DepositListener dl = new DepositListener();
-		btnWithdrawal.addActionListener(dl);
-		btnWithdrawal.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnWithdrawal.setBounds(80, 460, 270, 60);
-		contentPane.add(btnWithdrawal);
+		btnRequest.addActionListener(dl);
+		btnRequest.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		btnRequest.setBounds(80, 460, 270, 60);
+		contentPane.add(btnRequest);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(70, 170, 340, 254);
@@ -111,7 +128,7 @@ public class GUIWithdrawal extends GUIDepositOrWithdrawal {
 		comboBox_CashType.setBounds(601, 265, 160, 30);
 		contentPane.add(comboBox_CashType);
 		
-		lblNewLabel = new JLabel("Cash type:");
+		lblNewLabel = new JLabel("Loan type:");
 		lblNewLabel.setFont(new Font("Consolas", Font.PLAIN, 20));
 		lblNewLabel.setBounds(437, 255, 131, 50);
 		contentPane.add(lblNewLabel);
@@ -231,6 +248,55 @@ public class GUIWithdrawal extends GUIDepositOrWithdrawal {
 	class BackListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
 			setVisible(false);
+		}
+	}
+	
+	protected double convertCash(double x) {
+		CurrencyUSD USD = new CurrencyUSD(x);
+		if (cashType.compareTo(CurrencyUSD.abbr) == 0) {
+			return x;
+		}
+		else if (cashType.compareTo(CurrencyCNY.abbr) == 0) {
+			CurrencyCNY CNY = new CurrencyCNY(USD);
+			return CNY.getAmount();
+		}
+		else if (cashType.compareTo(CurrencyRUB.abbr) == 0) {
+			CurrencyRUB RUB = new CurrencyRUB(USD);
+			return RUB.getAmount();
+		}
+		return x;
+	}
+	
+	protected double convertCur(double x) {
+		CurrencyUSD USD = new CurrencyUSD(x);
+		if (currencyType.compareTo(CurrencyUSD.abbr) == 0) {
+			return x;
+		}
+		else if (currencyType.compareTo(CurrencyCNY.abbr) == 0) {
+			CurrencyCNY CNY = new CurrencyCNY(USD);
+			return CNY.getAmount();
+		}
+		else if (currencyType.compareTo(CurrencyRUB.abbr) == 0) {
+			CurrencyRUB RUB = new CurrencyRUB(USD);
+			return RUB.getAmount();
+		}
+		return x;
+	}
+	
+	protected void setTable(ArrayList<Accounts> accounts) {
+		DefaultTableModel dtm = (DefaultTableModel) accountsTable.getModel();
+		dtm.setRowCount(0);
+		for (Accounts c: accounts) {
+			Vector v = new Vector();
+			v.add(c.getAccountNumber());
+			v.add(convertCur(c.getBalance()));
+			if (c instanceof CheckingAccounts) {
+				v.add("Checking");
+			}
+			else if (c instanceof SavingsAccounts) {
+				v.add("Savings");
+			}
+			dtm.addRow(v);
 		}
 	}
 }

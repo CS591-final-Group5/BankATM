@@ -16,8 +16,6 @@ public class Database {
 	static final String USERNAME = "root";
 	static final String PASSWORD = "123456";
 	static final String DBNAME = "bankdb";
-	public static final String bankMangerUsername = "BMcpk";
-	public static final String bankMangerPassword = "CS591";
 	
 	public Database() {
 		try {
@@ -87,7 +85,11 @@ public class Database {
 				String sql_4 = "create table transactions (" +
 				               "username varchar(255) not null, " +
 				               "tid varchar(255) not null, " +
+				               "accountnumber varchar(255) not null, " +
+				               "type varchar(255) not null, " +
 				               "time date, " +
+				               "details varchar(255) not null, " +
+				               "target varchar(255) not null, " +
 				               "amount double not null, " + 
 				               "primary key( tid ))";
 				stmtDB.executeUpdate(sql_4);
@@ -100,9 +102,18 @@ public class Database {
 				               "name varchar(255) not null, " +
 				               "primary key( cid ))";
 				stmtDB.executeUpdate(sql_5);
-				
-				
-				
+				/*
+				 * Create table "manager"
+				 */
+				String sql_6 = "create table manager (" + 
+						       "username varchar(255) not null, " +
+						       "password varchar(255) not null, " +
+						       "fullname varchar(255) not null, " +
+						       "email varchar(255) not null, " +
+						       "starttime date, " +
+						       "currenttime date, " +
+						       "primary key( username ))";
+				stmtDB.executeUpdate(sql_6);
 				
 				stmtDB.close();
 			}
