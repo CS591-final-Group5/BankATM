@@ -175,7 +175,7 @@ public class GUIDeposit extends GUIDepositOrWithdrawal {
 			}
 			DefaultTableModel dtm = (DefaultTableModel) accountsTable.getModel();
 			String accountNumber = dtm.getValueAt(idx, 0).toString();
-			
+			String accountType = dtm.getValueAt(idx, 2).toString();
 			AccountDAO accountDAO = new AccountDAO();
 			String strPassword = String.valueOf(passwordField.getPassword());
 			if (!accountDAO.authenticate(accountNumber, strPassword)) {
@@ -214,7 +214,9 @@ public class GUIDeposit extends GUIDepositOrWithdrawal {
 						accountDAO.closeConn();
 						return;
 					}
-					if (accountDAO.depositMoney(accountNumber, amount)) {
+					Transactions transaction = new Transactions(username, "", accountNumber, 
+							accountType, null, Transactions.TYPE_1, "", amount);
+					if (accountDAO.depositMoney(accountNumber, amount, transaction)) {
 						JOptionPane.showMessageDialog(null, "Successfully deposited!");
 						setTable(accountDAO.getAccounts(username));
 					}

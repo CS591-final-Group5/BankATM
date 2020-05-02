@@ -32,6 +32,7 @@ public class GUILoans extends GUIInternalWindow {
 	private JPasswordField passwordField;
 	private JLabel lblPasswordOfSpecified;
     private JButton btnRequest;
+    private JTable loansTable;
 	
 	/**
 	 * Create the frame.
@@ -73,14 +74,14 @@ public class GUILoans extends GUIInternalWindow {
 		contentPane.add(btnBack);
 		
 		btnRequest = new JButton("Request");
-		DepositListener dl = new DepositListener();
+		RequestListener dl = new RequestListener();
 		btnRequest.addActionListener(dl);
 		btnRequest.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnRequest.setBounds(80, 460, 270, 60);
 		contentPane.add(btnRequest);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(70, 170, 340, 254);
+		scrollPane.setBounds(70, 170, 340, 125);
 		contentPane.add(scrollPane);
 		
 		accountsTable = new JTable();
@@ -149,8 +150,33 @@ public class GUILoans extends GUIInternalWindow {
 		lblPasswordOfSpecified.setBounds(437, 136, 347, 50);
 		contentPane.add(lblPasswordOfSpecified);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(71, 310, 340, 125);
+		contentPane.add(scrollPane_1);
+		
+		loansTable = new JTable();
+		loansTable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ACCOUNT_NUMBER", "AMOUNT_OF_LOAN"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		loansTable.getColumnModel().getColumn(0).setPreferredWidth(132);
+		loansTable.getColumnModel().getColumn(1).setPreferredWidth(140);
+		loansTable.setFont(new Font("Consolas", Font.PLAIN, 14));
+		scrollPane_1.setViewportView(loansTable);
+		
 		AccountDAO accountDAO = new AccountDAO();
 		setTable(accountDAO.getAccounts(username));
+		setTable_L(accountDAO.getLoans(username));
 		accountDAO.closeConn();
 	}
 	
@@ -162,6 +188,7 @@ public class GUILoans extends GUIInternalWindow {
 			}
 			AccountDAO accountDAO = new AccountDAO();
 			setTable(accountDAO.getAccounts(username));
+			setTable_L(accountDAO.getLoans(username));
 			accountDAO.closeConn();
 		}
 	}
@@ -174,25 +201,28 @@ public class GUILoans extends GUIInternalWindow {
 			}
 			AccountDAO accountDAO = new AccountDAO();
 			setTable(accountDAO.getAccounts(username));
+			setTable_L(accountDAO.getLoans(username));
 			accountDAO.closeConn();
 		}
 	}
 	
-	class DepositListener implements ActionListener {
+	class RequestListener implements ActionListener {
 		/*
-		 * Deposit/Withdrawal Pipeline:
+		 * Request a loan Pipeline:
 		 * -  Select account and verify password
-		 * -  Update balance of specified account
+		 * -  Use resonable amount and check collateral 
+		 * -  Request loan
 		 */
 		public void actionPerformed( ActionEvent e ) {
 			int idx = accountsTable.getSelectedRow();
 			if (idx == -1) {
-				JOptionPane.showMessageDialog(null, "Please select the account which you want to close");
+				JOptionPane.showMessageDialog(null, "Please select the account which you use to"
+						+ "request a loan");
 				return;
 			}
 			DefaultTableModel dtm = (DefaultTableModel) accountsTable.getModel();
 			String accountNumber = dtm.getValueAt(idx, 0).toString();
-			
+			String accountType = dtm.getValueAt(idx, 1).toString();
 			AccountDAO accountDAO = new AccountDAO();
 			String strPassword = String.valueOf(passwordField.getPassword());
 			if (!accountDAO.authenticate(accountNumber, strPassword)) {
@@ -231,9 +261,19 @@ public class GUILoans extends GUIInternalWindow {
 						accountDAO.closeConn();
 						return;
 					}
-					if (accountDAO.depositMoney(accountNumber, -amount)) {
-						JOptionPane.showMessageDialog(null, "Successfully withdrawaled!");
+					CollateralDAO collateralDAO = new CollateralDAO();
+					if (!collateralDAO.hasCollaterals(username)) {
+						JOptionPane.showMessageDialog(null, "You don't have collateral!", 
+								"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					collateralDAO.closeConn();
+					Transactions transaction = new Transactions(username, "", accountNumber, 
+							accountType, null, Transactions.TYPE_3, "", amount);
+					if (accountDAO.depositMoney(accountNumber, amount, transaction)) {
+						JOptionPane.showMessageDialog(null, "Requested successfully!");
 						setTable(accountDAO.getAccounts(username));
+						setTable_L(accountDAO.getLoans(username));
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Failed!", 
@@ -290,13 +330,20 @@ public class GUILoans extends GUIInternalWindow {
 			Vector v = new Vector();
 			v.add(c.getAccountNumber());
 			v.add(convertCur(c.getBalance()));
-			if (c instanceof CheckingAccounts) {
-				v.add("Checking");
-			}
-			else if (c instanceof SavingsAccounts) {
-				v.add("Savings");
-			}
+			v.add(c.getAbbr());
 			dtm.addRow(v);
 		}
+	}
+	
+	protected void setTable_L(ArrayList<Loans> loans) {
+		DefaultTableModel dtm = (DefaultTableModel) loansTable.getModel();
+		dtm.setRowCount(0);
+		for (Loans l: loans) {
+			Vector v = new Vector();
+			v.add(l.getAccountNumber());
+			v.add(convertCur(l.getAmount()));
+			dtm.addRow(v);
+		}
+		System.out.println("ddd");
 	}
 }

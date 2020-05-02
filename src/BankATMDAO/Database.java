@@ -85,12 +85,12 @@ public class Database {
 				String sql_4 = "create table transactions (" +
 				               "username varchar(255) not null, " +
 				               "tid varchar(255) not null, " +
-				               "accountnumber varchar(255) not null, " +
-				               "type varchar(255) not null, " +
+				               "accountnumber varchar(255), " +
+				               "type varchar(255), " +
 				               "time date, " +
-				               "details varchar(255) not null, " +
-				               "target varchar(255) not null, " +
-				               "amount double not null, " + 
+				               "details varchar(255), " +
+				               "target varchar(255), " +
+				               "amount double, " + 
 				               "primary key( tid ))";
 				stmtDB.executeUpdate(sql_4);
 				/*
@@ -112,8 +112,17 @@ public class Database {
 						       "email varchar(255) not null, " +
 						       "starttime date, " +
 						       "currenttime date, " +
+						       "profit double, " +
 						       "primary key( username ))";
 				stmtDB.executeUpdate(sql_6);
+				/*
+				 * Create table "loans"
+				 */
+				String sql_7 = "create table loans (" + 
+						       "accountnumber varchar(255) not null, " +
+						       "amount double, " + 
+						       "primary key( accountnumber ))";
+				stmtDB.executeUpdate(sql_7);
 				
 				stmtDB.close();
 			}

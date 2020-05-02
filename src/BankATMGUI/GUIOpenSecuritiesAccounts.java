@@ -235,8 +235,10 @@ public class GUIOpenSecuritiesAccounts extends GUIInternalWindow {
 				}
 				AccountDAO accountDAO = new AccountDAO();
 				String newID = accountDAO.openNewAccount(username, accountType, strPassword_1);
-				if (accountDAO.depositMoney(accountNumber, -amount) && 
-						accountDAO.depositMoney(newID, amount)) {
+				Transactions transaction = new Transactions(username, "", accountNumber, 
+						accountType, null, Transactions.TYPE_4, newID, amount);
+				if (accountDAO.depositMoney(accountNumber, -amount, transaction) && 
+						accountDAO.depositMoney(newID, amount, null)) {
 					JOptionPane.showMessageDialog(null, "Successfully transfered!");
 					setTable(accountDAO.getAccounts(username));
 				}

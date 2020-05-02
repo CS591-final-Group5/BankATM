@@ -126,6 +126,8 @@ public class GUICustomersInterface extends JFrame {
 		mnTransactions.add(mntmWithdrawal);
 		
 		JMenuItem mntmLoan = new JMenuItem("Loan");
+		RequestLoanListener rll = new RequestLoanListener();
+		mntmLoan.addActionListener(rll);
 		mntmLoan.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Loans.png")));
 		mnTransactions.add(mntmLoan);
 		
@@ -147,6 +149,22 @@ public class GUICustomersInterface extends JFrame {
 		contentPane.add(desktopPane);
 		
 		setLocationRelativeTo(null);
+	}
+	
+	class RequestLoanListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUILoans frame = new GUILoans(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 	
 	class OpenSecuritiesAccountsListener implements ActionListener {

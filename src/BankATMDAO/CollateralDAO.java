@@ -94,4 +94,25 @@ public class CollateralDAO extends Database {
 		return false;
 	}
 	
+	public boolean hasCollaterals(String username) {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from collaterals where username='" + username + "'";
+			ResultSet res = stmt.executeQuery(sql);
+			if(res.next() == false){
+				res.close();
+	            stmt.close();
+	            return false;
+			}
+			else {
+				res.close();
+	            stmt.close();
+	            return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
 }

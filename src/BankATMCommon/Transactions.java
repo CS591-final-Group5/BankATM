@@ -16,12 +16,12 @@ public class Transactions {
 	private Date time;
 	private String details;
 	private String target;
-	private String amount;
+	private double amount;
 	
 	
 
 	public Transactions(String username, String tid, String accountnumber, String type, 
-			Date time, String details, String target, String amount) {
+			Date time, String details, String target, double amount) {
 		this.username = username;
 		this.tid = tid;
 		this.accountnumber = accountnumber;
@@ -88,11 +88,11 @@ public class Transactions {
 		this.target = target;
 	}
 
-	public String getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	
