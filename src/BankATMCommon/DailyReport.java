@@ -1,6 +1,10 @@
 
 package BankATMCommon;
 
-public interface DailyReport {
+import java.util.ArrayList
 
+public interface DailyReport {
+  
+  public ArrayList<Transaction> dailyReport(Date time);
+  
 }
