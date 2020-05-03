@@ -1,6 +1,10 @@
 package BankATMDAO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import BankATMCommon.*;
 
 public class ManagerDAO extends Database {
 
@@ -66,6 +70,47 @@ public class ManagerDAO extends Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Date> getAllDates() {
+		Date start_date = null;
+		Date current_date = null;
+		ArrayList<Date> dates = new ArrayList<Date> ();
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from manager";
+			ResultSet res = stmt.executeQuery(sql);
+			res.next();
+			start_date = res.getDate("starttime");
+			current_date = res.getDate("currenttime");
+			res.close();
+            stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(start_date);
+		boolean halt = false;
+		do {
+			Date date = new Date(c.getTimeInMillis());
+			dates.add(date);
+			if (date == current_date) {
+				halt = true;
+			}
+			else {
+				c.set(Calendar.DAY_OF_MONTH, 1);
+			}
+		} while (halt);
+		return dates;
+	}
+	
+	public boolean compareDates(Date day1, Date day2) {
+		/*
+		 * Only compare year, month and day
+		 */
+		//String str1 = Date.valueOf(day1.toString());
+		
+		return false;
 	}
 	
 	public String getBankMangerUsername() {

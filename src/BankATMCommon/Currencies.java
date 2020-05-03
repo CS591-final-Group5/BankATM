@@ -30,4 +30,8 @@ public abstract class Currencies implements ConvertCurrency {
 		return amount;
 	}
 	
+	public void setAmount(double amount) {
+		this.amount = amount; 
+	}
+	
 }

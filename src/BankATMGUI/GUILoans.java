@@ -66,8 +66,8 @@ public class GUILoans extends GUIInternalWindow {
 		lblDesc.setBounds(50, 65, 700, 60);
 		contentPane.add(lblDesc);
 		
-		btnBack = new JButton("Back");
-		BackListener bl = new BackListener();
+		btnBack = new JButton("Close");
+		CloseListener bl = new CloseListener();
 		btnBack.addActionListener(bl);
 		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnBack.setBounds(460, 460, 270, 60);
@@ -222,7 +222,7 @@ public class GUILoans extends GUIInternalWindow {
 			}
 			DefaultTableModel dtm = (DefaultTableModel) accountsTable.getModel();
 			String accountNumber = dtm.getValueAt(idx, 0).toString();
-			String accountType = dtm.getValueAt(idx, 1).toString();
+			String accountType = dtm.getValueAt(idx, 2).toString();
 			AccountDAO accountDAO = new AccountDAO();
 			String strPassword = String.valueOf(passwordField.getPassword());
 			if (!accountDAO.authenticate(accountNumber, strPassword)) {
@@ -285,39 +285,36 @@ public class GUILoans extends GUIInternalWindow {
 		}
 	}
 	
-	class BackListener implements ActionListener {
+	class CloseListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
 			setVisible(false);
 		}
 	}
 	
 	protected double convertCash(double x) {
-		CurrencyUSD USD = new CurrencyUSD(x);
+		CurrencyUSD USD = null;
 		if (cashType.compareTo(CurrencyUSD.abbr) == 0) {
 			return x;
 		}
 		else if (cashType.compareTo(CurrencyCNY.abbr) == 0) {
-			CurrencyCNY CNY = new CurrencyCNY(USD);
-			return CNY.getAmount();
+			USD = new CurrencyUSD(x, CurrencyCNY.abbr);
 		}
 		else if (cashType.compareTo(CurrencyRUB.abbr) == 0) {
-			CurrencyRUB RUB = new CurrencyRUB(USD);
-			return RUB.getAmount();
+			USD = new CurrencyUSD(x, CurrencyRUB.abbr);
 		}
-		return x;
+		return USD.getAmount();
 	}
 	
 	protected double convertCur(double x) {
-		CurrencyUSD USD = new CurrencyUSD(x);
 		if (currencyType.compareTo(CurrencyUSD.abbr) == 0) {
 			return x;
 		}
 		else if (currencyType.compareTo(CurrencyCNY.abbr) == 0) {
-			CurrencyCNY CNY = new CurrencyCNY(USD);
+			CurrencyCNY CNY = new CurrencyCNY(new CurrencyUSD(x));
 			return CNY.getAmount();
 		}
 		else if (currencyType.compareTo(CurrencyRUB.abbr) == 0) {
-			CurrencyRUB RUB = new CurrencyRUB(USD);
+			CurrencyRUB RUB = new CurrencyRUB(new CurrencyUSD(x));
 			return RUB.getAmount();
 		}
 		return x;

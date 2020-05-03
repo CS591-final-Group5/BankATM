@@ -102,9 +102,9 @@ public class GUIOpenSecuritiesAccounts extends GUIInternalWindow {
 		accountsTable.getColumnModel().getColumn(1).setPreferredWidth(72);
 		scrollPane.setViewportView(accountsTable);
 		
-		JLabel lblPassword = new JLabel("Password:");
+		JLabel lblPassword = new JLabel("Set password two times:");
 		lblPassword.setFont(new Font("Consolas", Font.PLAIN, 22));
-		lblPassword.setBounds(440, 368, 168, 40);
+		lblPassword.setBounds(440, 368, 344, 40);
 		contentPane.add(lblPassword);
 		
 		passwordField_1 = new JPasswordField();
@@ -181,7 +181,6 @@ public class GUIOpenSecuritiesAccounts extends GUIInternalWindow {
 						+ " which has more than 5000$!");
 				return;
 			}
-			
 			String strPassword_1 = String.valueOf(passwordField_1.getPassword());
 			String strPassword_2 = String.valueOf(passwordField_2.getPassword());			
 			boolean invalid = false;
@@ -236,7 +235,7 @@ public class GUIOpenSecuritiesAccounts extends GUIInternalWindow {
 				AccountDAO accountDAO = new AccountDAO();
 				String newID = accountDAO.openNewAccount(username, accountType, strPassword_1);
 				Transactions transaction = new Transactions(username, "", accountNumber, 
-						accountType, null, Transactions.TYPE_4, newID, amount);
+						null, null, Transactions.TYPE_4, newID, amount);
 				if (accountDAO.depositMoney(accountNumber, -amount, transaction) && 
 						accountDAO.depositMoney(newID, amount, null)) {
 					JOptionPane.showMessageDialog(null, "Successfully transfered!");
@@ -252,32 +251,29 @@ public class GUIOpenSecuritiesAccounts extends GUIInternalWindow {
 	}
 		
 	protected double convertCash(double x) {
-		CurrencyUSD USD = new CurrencyUSD(x);
+		CurrencyUSD USD = null;
 		if (cashType.compareTo(CurrencyUSD.abbr) == 0) {
 			return x;
 		}
 		else if (cashType.compareTo(CurrencyCNY.abbr) == 0) {
-			CurrencyCNY CNY = new CurrencyCNY(USD);
-			return CNY.getAmount();
+			USD = new CurrencyUSD(x, CurrencyCNY.abbr);
 		}
 		else if (cashType.compareTo(CurrencyRUB.abbr) == 0) {
-			CurrencyRUB RUB = new CurrencyRUB(USD);
-			return RUB.getAmount();
+			USD = new CurrencyUSD(x, CurrencyRUB.abbr);
 		}
-		return x;
+		return USD.getAmount();
 	}
 	
-	private double convertCur(double x) {
-		CurrencyUSD USD = new CurrencyUSD(x);
+	protected double convertCur(double x) {
 		if (currencyType.compareTo(CurrencyUSD.abbr) == 0) {
 			return x;
 		}
 		else if (currencyType.compareTo(CurrencyCNY.abbr) == 0) {
-			CurrencyCNY CNY = new CurrencyCNY(USD);
+			CurrencyCNY CNY = new CurrencyCNY(new CurrencyUSD(x));
 			return CNY.getAmount();
 		}
 		else if (currencyType.compareTo(CurrencyRUB.abbr) == 0) {
-			CurrencyRUB RUB = new CurrencyRUB(USD);
+			CurrencyRUB RUB = new CurrencyRUB(new CurrencyUSD(x));
 			return RUB.getAmount();
 		}
 		return x;

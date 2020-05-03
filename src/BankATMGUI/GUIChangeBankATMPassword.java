@@ -127,10 +127,12 @@ public class GUIChangeBankATMPassword extends GUIInternalWindow {
 								"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 					}
 					else {
-						Database.changePassword(username, strPassword_1);
+						AccountDAO accountDAO = new AccountDAO();
+						accountDAO.changePassword(username, strPassword_1);
 						JOptionPane.showMessageDialog(null, "Password changed!", 
 								"", JOptionPane.INFORMATION_MESSAGE);
 						setVisible(false);
+						accountDAO.closeConn();
 					}
 				}
 				else {

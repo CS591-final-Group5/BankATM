@@ -50,32 +50,29 @@ public class GUIDepositOrWithdrawal extends GUIInternalWindow {
 	}
 	
 	protected double convertCash(double x) {
-		CurrencyUSD USD = new CurrencyUSD(x);
+		CurrencyUSD USD = null;
 		if (cashType.compareTo(CurrencyUSD.abbr) == 0) {
 			return x;
 		}
 		else if (cashType.compareTo(CurrencyCNY.abbr) == 0) {
-			CurrencyCNY CNY = new CurrencyCNY(USD);
-			return CNY.getAmount();
+			USD = new CurrencyUSD(x, CurrencyCNY.abbr);
 		}
 		else if (cashType.compareTo(CurrencyRUB.abbr) == 0) {
-			CurrencyRUB RUB = new CurrencyRUB(USD);
-			return RUB.getAmount();
+			USD = new CurrencyUSD(x, CurrencyRUB.abbr);
 		}
-		return x;
+		return USD.getAmount();
 	}
 	
 	protected double convertCur(double x) {
-		CurrencyUSD USD = new CurrencyUSD(x);
 		if (currencyType.compareTo(CurrencyUSD.abbr) == 0) {
 			return x;
 		}
 		else if (currencyType.compareTo(CurrencyCNY.abbr) == 0) {
-			CurrencyCNY CNY = new CurrencyCNY(USD);
+			CurrencyCNY CNY = new CurrencyCNY(new CurrencyUSD(x));
 			return CNY.getAmount();
 		}
 		else if (currencyType.compareTo(CurrencyRUB.abbr) == 0) {
-			CurrencyRUB RUB = new CurrencyRUB(USD);
+			CurrencyRUB RUB = new CurrencyRUB(new CurrencyUSD(x));
 			return RUB.getAmount();
 		}
 		return x;

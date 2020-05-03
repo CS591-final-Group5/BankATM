@@ -1,24 +1,13 @@
 package BankATMGUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.Arrays;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import BankATMDAO.Database;
-
-import javax.swing.SwingConstants;
+import BankATMDAO.*;
 
 public class GUIUserRegister extends JFrame {
 
@@ -166,16 +155,18 @@ public class GUIUserRegister extends JFrame {
 							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					if (Database.findUser(strUsername)) {
-						JOptionPane.showMessageDialog(null, "This account name has already been claimed!", 
+					AccountDAO accountDAO = new AccountDAO();
+					if (accountDAO.findUser(strUsername)) {
+						JOptionPane.showMessageDialog(null, "This username has already been claimed!", 
 								"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 					}
 					else {
-						Database.createUser(strUsername, strPassword, strEmail, strFullname);
+						accountDAO.createUser(strUsername, strPassword, strEmail, strFullname);
 						setVisible(false);
 						GUIHomepage frame = new GUIHomepage();
 						frame.setVisible(true);
 					}
+					accountDAO.closeConn();
 				}
 			}
 		}

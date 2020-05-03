@@ -108,6 +108,7 @@ public class GUICustomersInterface extends JFrame {
 		JMenuItem mntmChangeCardsPassword = new JMenuItem("Change password of a card");
 		mntmChangeCardsPassword.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/ChangeCardsPassword.png")));
 		mnCards.add(mntmChangeCardsPassword);
+		TransferListener tfl = new TransferListener();
 		
 		JMenu mnTransactions = new JMenu("Transactions");
 		mnTransactions.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Transactions.png")));
@@ -116,6 +117,11 @@ public class GUICustomersInterface extends JFrame {
 		JMenuItem mntmDeposit = new JMenuItem("Deposit");
 		DepositListener dpl = new DepositListener();
 		mntmDeposit.addActionListener(dpl);
+		
+		JMenuItem mntmTransfer = new JMenuItem("Transfer");
+		mnTransactions.add(mntmTransfer);
+		mntmTransfer.addActionListener(tfl);
+		mntmTransfer.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Transfer.png")));
 		mntmDeposit.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Deposit.png")));
 		mnTransactions.add(mntmDeposit);
 		
@@ -130,6 +136,12 @@ public class GUICustomersInterface extends JFrame {
 		mntmLoan.addActionListener(rll);
 		mntmLoan.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Loans.png")));
 		mnTransactions.add(mntmLoan);
+		
+		JMenuItem mntmDisplayTransactions = new JMenuItem("Display Transactions");
+		DisplayTransactionListener dtl = new DisplayTransactionListener();
+		mntmDisplayTransactions.addActionListener(dtl);
+		mntmDisplayTransactions.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/DisplayTransactions.png")));
+		mnTransactions.add(mntmDisplayTransactions);
 		
 		JMenu mnStockMarket = new JMenu("StockMarket");
 		mnStockMarket.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/StockMarket.png")));
@@ -159,6 +171,38 @@ public class GUICustomersInterface extends JFrame {
 					jf.setVisible(false);
 				}
 				GUILoans frame = new GUILoans(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class TransferListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUITransfer frame = new GUITransfer(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class DisplayTransactionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUIDisplayTransactions frame = new GUIDisplayTransactions(username);
 				frame.setVisible(true);
 				desktopPane.add(frame);
 			} catch (Exception ex) {

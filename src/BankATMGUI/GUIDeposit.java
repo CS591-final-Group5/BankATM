@@ -154,6 +154,7 @@ public class GUIDeposit extends GUIDepositOrWithdrawal {
 			JComboBox jcb = (JComboBox)e.getSource();
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				cashType = jcb.getSelectedItem().toString();
+				System.out.print(cashType);
 			}
 			AccountDAO accountDAO = new AccountDAO();
 			setTable(accountDAO.getAccounts(username));

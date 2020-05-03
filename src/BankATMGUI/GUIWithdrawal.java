@@ -214,6 +214,12 @@ public class GUIWithdrawal extends GUIDepositOrWithdrawal {
 						accountDAO.closeConn();
 						return;
 					}
+					if (accountDAO.getBalance(accountNumber) < amount) {
+						JOptionPane.showMessageDialog(null, "No enough balance!", 
+								"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+						accountDAO.closeConn();
+						return;
+					}
 					Transactions transaction = new Transactions(username, "", accountNumber, 
 							accountType, null, Transactions.TYPE_2, "", amount);
 					if (accountDAO.depositMoney(accountNumber, -amount, transaction)) {

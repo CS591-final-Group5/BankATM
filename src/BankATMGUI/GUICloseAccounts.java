@@ -133,8 +133,9 @@ public class GUICloseAccounts extends GUIInternalWindow {
 			}
 			DefaultTableModel dtm = (DefaultTableModel) accountsTable.getModel();
 			String accountNumber = dtm.getValueAt(idx, 0).toString();
+			String accountType = dtm.getValueAt(idx, 2).toString();
 			AccountDAO accountDAO = new AccountDAO();
-			if (accountDAO.closeAccount(accountNumber)) {
+			if (accountDAO.closeAccount(username, accountNumber, accountType)) {
 				JOptionPane.showMessageDialog(null, "Successfully closed!");
 				// Refresh table
 				setTable(accountDAO.getAccounts(username));

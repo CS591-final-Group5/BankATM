@@ -73,5 +73,8 @@ GUIBankATM
 
 
 ### Tips
-1.The bank manager's account can only be used in BankManagerLogin page. You can create a customer account that has the same username as the name manager's account.
-2.Username and password can only contain digits or letters.
+1. The bank manager's account can only be used in BankManagerLogin page. You can create a customer account that has the same username as the name manager's account.
+2. Username and password can only contain digits or letters.
+3. To avoiding losing money, please withdrawal all your balance/sell all your stocks before close a account.
+4. If you have a securities account that could do stock business, the sum of balance of all your savings accounts should be no less than 2500$.
+5. Transfer can only happen between savings account and securities account. And you can't violate tip_4. Meanwhile, only savings account that has no less than 5000 can transfer money to a securities account.

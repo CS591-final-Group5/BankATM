@@ -12,10 +12,10 @@ public class CurrencyUSD extends Currencies {
 	public CurrencyUSD(double amount, String type) {
 		super(amount);
 		if (type.compareTo(CurrencyCNY.abbr) == 0) {
-			amount /= ConvertCurrency.USDtoCNY;
+			setAmount(amount / ConvertCurrency.USDtoCNY);
 		}
 		else if (type.compareTo(CurrencyRUB.abbr) == 0) {
-			amount /= ConvertCurrency.USDtoRUB;
+			setAmount(amount / ConvertCurrency.USDtoRUB);
 		}
 	}
 

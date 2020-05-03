@@ -102,8 +102,9 @@ public class GUICustomersLogin extends JFrame {
 		public void actionPerformed( ActionEvent e ) {
 			try {
 				String strUsername = textUsername.getText();
-				String strPassword = String.valueOf(passwordField.getPassword());				
-				if (Database.userLogin(strUsername, strPassword)) {
+				String strPassword = String.valueOf(passwordField.getPassword());
+				AccountDAO accountDAO = new AccountDAO();
+				if (accountDAO.userLogin(strUsername, strPassword)) {
 					setVisible(false);
 					GUICustomersInterface frame = new GUICustomersInterface(strUsername);
 					frame.setVisible(true);
@@ -112,6 +113,7 @@ public class GUICustomersLogin extends JFrame {
 					JOptionPane.showMessageDialog(null, "Login fail: wrong username or password", 
 							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 				}
+				accountDAO.closeConn();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
