@@ -172,6 +172,25 @@ public class ManagerDAO extends Database {
 		}
 	}
 	
+	public double getProfit() {
+		/*
+		 * Get the profit you have earned
+		 */
+		double profit = 0;
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from manager";
+            ResultSet res = stmt.executeQuery(sql);
+            res.next();
+            profit = res.getDouble("profit");
+            res.close();
+            stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return profit;
+	}
+	
 	public ArrayList<String> getAllUser() {
 		/*
 		 * Get all users

@@ -247,6 +247,10 @@ public class GUIOpenSecuritiesAccounts extends GUIInternalWindow {
 						accountDAO.depositMoney(newID, amount, null)) {
 					JOptionPane.showMessageDialog(null, "Successfully transfered!");
 					setTable(accountDAO.getAccounts(username));
+					// fee
+					ManagerDAO managerDAO = new ManagerDAO();
+					managerDAO.chargeFee(1);
+					managerDAO.closeConn();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Failed!", 

@@ -18,7 +18,7 @@ public class AccountDAO extends Database {
 		}
 	}
 	
-	public void closeConn() {
+	public void closeConn () {
 		try {
 			conn.close();
 		} catch (SQLException e) {
@@ -44,6 +44,22 @@ public class AccountDAO extends Database {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public String getUsername(String accountNumber) {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from accounts where accountnumber='" + accountNumber + "'";
+            ResultSet res = stmt.executeQuery(sql);
+            res.next();
+            String resUsername = res.getString("username");
+            res.close();
+            stmt.close();
+            return resUsername;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 	
 	public void createUser(String username, String password, String email, String fullname) {
@@ -365,6 +381,32 @@ public class AccountDAO extends Database {
 			String sql = "select * from accounts A, loans B " + 
 			             "where A.username='" + username + "' " +
 					     "and A.accountnumber = B.accountnumber";
+			ResultSet res = stmt.executeQuery(sql);
+			if(res.next() == false){
+				res.close();
+	            stmt.close();
+			}
+			else {
+				do {
+					Loans l = null;
+					l = new Loans(res.getString("accountnumber"), res.getDouble("amount"));
+					loans.add(l);
+				} while(res.next());
+				res.close();
+	            stmt.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return loans;
+	}
+	
+	public ArrayList<Loans> getAllLoans() {
+		ArrayList<Loans> loans = new ArrayList<Loans> ();
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from accounts A, loans B " + 
+			             "where A.accountnumber = B.accountnumber";
 			ResultSet res = stmt.executeQuery(sql);
 			if(res.next() == false){
 				res.close();

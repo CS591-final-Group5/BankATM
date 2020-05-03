@@ -189,6 +189,10 @@ public class GUIOpenAccounts extends GUIInternalWindow {
 			accountDAO.closeConn();
 			JOptionPane.showMessageDialog(null, "Account created successfully!\n"
 					+ "The account number is " + accountNumber);
+			// fee
+			ManagerDAO managerDAO = new ManagerDAO();
+			managerDAO.chargeFee(1);
+			managerDAO.closeConn();
 		}
 	}
 	

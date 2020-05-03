@@ -139,6 +139,10 @@ public class GUICloseAccounts extends GUIInternalWindow {
 				JOptionPane.showMessageDialog(null, "Successfully closed!");
 				// Refresh table
 				setTable(accountDAO.getAccounts(username));
+				// fee
+				ManagerDAO managerDAO = new ManagerDAO();
+				managerDAO.chargeFee(1);
+				managerDAO.closeConn();
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Failed to close this account!");

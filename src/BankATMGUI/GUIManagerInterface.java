@@ -33,7 +33,7 @@ public class GUIManagerInterface extends JFrame {
 	 */
 	public GUIManagerInterface(String username) {
 		this.username = username;
-		setTitle("Customer Interface");
+		setTitle("Manager Interface");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 30, 1024, 768);
 		contentPane = new JPanel();
@@ -77,6 +77,16 @@ public class GUIManagerInterface extends JFrame {
 		mntmChangeDate.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/ModifyDate.png")));
 		mnDate.add(mntmChangeDate);
 		
+		JMenu mnProfit = new JMenu("Profit");
+		mnProfit.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/Profit.png")));
+		menuBar.add(mnProfit);
+		
+		JMenuItem mntmCheckProfit = new JMenuItem("How many money you earn?");
+		CheckProfitListener cptl = new CheckProfitListener();
+		mntmCheckProfit.addActionListener(cptl);
+		mntmCheckProfit.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/Earn.png")));
+		mnProfit.add(mntmCheckProfit);
+		
 		JMenu mnTransactions = new JMenu("Transactions");
 		mnTransactions.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/Transactions.png")));
 		menuBar.add(mnTransactions);
@@ -90,6 +100,12 @@ public class GUIManagerInterface extends JFrame {
 		JMenuItem mntmCheckUp = new JMenuItem("Check up");
 		CheckUpListener cul = new CheckUpListener();
 		mntmCheckUp.addActionListener(cul);
+		
+		JMenuItem mntmDisplayLoans = new JMenuItem("Display loans");
+		DisplayLoansListener dll = new DisplayLoansListener();
+		mntmDisplayLoans.addActionListener(dll);
+		mntmDisplayLoans.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/DisplayLoans.png")));
+		mnTransactions.add(mntmDisplayLoans);
 		mntmCheckUp.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/CheckUp.png")));
 		mnTransactions.add(mntmCheckUp);
 		
@@ -114,6 +130,38 @@ public class GUIManagerInterface extends JFrame {
 		contentPane.add(desktopPane);
 		
 		setLocationRelativeTo(null);
+	}
+	
+	class DisplayLoansListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUIDisplayAllLoans frame = new GUIDisplayAllLoans();
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class CheckProfitListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUICheckProfit frame = new GUICheckProfit();
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 	
 	class CheckUpListener implements ActionListener {
