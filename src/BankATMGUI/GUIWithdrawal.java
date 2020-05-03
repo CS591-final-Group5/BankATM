@@ -175,7 +175,7 @@ public class GUIWithdrawal extends GUIDepositOrWithdrawal {
 			}
 			DefaultTableModel dtm = (DefaultTableModel) accountsTable.getModel();
 			String accountNumber = dtm.getValueAt(idx, 0).toString();
-			String accountType = dtm.getValueAt(idx, 1).toString();
+			String accountType = dtm.getValueAt(idx, 2).toString();
 			AccountDAO accountDAO = new AccountDAO();
 			String strPassword = String.valueOf(passwordField.getPassword());
 			if (!accountDAO.authenticate(accountNumber, strPassword)) {

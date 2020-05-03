@@ -332,7 +332,7 @@ public class AccountDAO extends Database {
 		try {
 			Statement stmt = conn.createStatement();
 			String sql = "select * from accounts A where accountNumber='" + 
-			             accountNumber + "'";
+					accountNumber + "'";
 			ResultSet res = stmt.executeQuery(sql);
 			res.next();
 			double resBalance = res.getDouble("balance");
@@ -343,6 +343,32 @@ public class AccountDAO extends Database {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public double getAllBalanceOfSavings(String username) {
+		double sum = 0;
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from accounts A where username='" + 
+					username + "' and type='Savings'";
+			ResultSet res = stmt.executeQuery(sql);
+			if (res.next() == false) {
+				res.close();
+				stmt.close();
+				return 0;
+			}
+			else {
+				do {
+					double resBalance = res.getDouble("balance");
+					sum += resBalance;
+				} while (res.next());
+				res.close();
+				stmt.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sum;
 	}
 	
 	public ArrayList<Loans> getLoans(String username) {

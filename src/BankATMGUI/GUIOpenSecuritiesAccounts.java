@@ -174,13 +174,14 @@ public class GUIOpenSecuritiesAccounts extends GUIInternalWindow {
 				JOptionPane.showMessageDialog(null, "Please select a savings account");
 				return;
 			}
-			CurrencyUSD currencyUSD = new CurrencyUSD(balance, cashType);
+			CurrencyUSD currencyUSD = new CurrencyUSD(balance, currencyType);
 			balance = currencyUSD.getAmount();
 			if (balance < 5000) {
 				JOptionPane.showMessageDialog(null, "Please select a savings account"
 						+ " which has more than 5000$!");
 				return;
 			}
+			// check password
 			String strPassword_1 = String.valueOf(passwordField_1.getPassword());
 			String strPassword_2 = String.valueOf(passwordField_2.getPassword());			
 			boolean invalid = false;
@@ -233,6 +234,12 @@ public class GUIOpenSecuritiesAccounts extends GUIInternalWindow {
 					return;
 				}
 				AccountDAO accountDAO = new AccountDAO();
+				if (accountDAO.getBalance(accountNumber) < amount) {
+					JOptionPane.showMessageDialog(null, "No enough balance!", 
+							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+					accountDAO.closeConn();
+					return;
+				}
 				String newID = accountDAO.openNewAccount(username, accountType, strPassword_1);
 				Transactions transaction = new Transactions(username, "", accountNumber, 
 						null, null, Transactions.TYPE_4, newID, amount);

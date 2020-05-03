@@ -152,7 +152,12 @@ public class GUIDisplayTransactions extends GUIInternalWindow {
 			Vector v = new Vector();
 			v.add(t.getTid());
 			v.add(t.getAccountNumber());
-			v.add(t.getType());
+			if (t.getDetails().compareTo(Transactions.TYPE_4) == 0) {
+				v.add(null);
+			}
+			else {
+				v.add(t.getType());
+			}
 			v.add(t.getTime());
 			v.add(t.getDetails());
 			v.add(t.getTarget());

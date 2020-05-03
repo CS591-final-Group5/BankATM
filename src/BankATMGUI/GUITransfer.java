@@ -17,11 +17,13 @@ public class GUITransfer extends GUIInternalWindow {
 	private String username;
 	private JPanel contentPane;
 	private ButtonGroup btGroup;
-	private JLabel lblCreateANew;
-	private JLabel lblDesc;
 	private JButton btnClose;
 	private JButton btnTransfer;
-	private JTable leftTable;
+	private JLabel lblTransfer;
+	private JLabel lblDesc;
+	private JLabel lblDisplayedCurrencyType;
+	private JLabel lblPasswordOfThe;
+	private JLabel lblTransferType;
 	private JPasswordField passwordField_1;
 	private JPasswordField passwordField_2;
 	private JComboBox comboBox_CashType;
@@ -30,10 +32,10 @@ public class GUITransfer extends GUIInternalWindow {
 	private String cashType = "USD"; // default
 	private JTextField textField;
 	private final String accountType = "Securities";
+	private JTable leftTable;
 	private JTable rightTable;
-	private JLabel lblDisplayedCurrencyType;
-	private JLabel lblPasswordOfThe;
-	private JLabel lblTransferType;
+	private JRadioButton rdbtn1;
+	private JRadioButton rdbtn2;
 	
 	/**
 	 * Create the frame.
@@ -52,12 +54,12 @@ public class GUITransfer extends GUIInternalWindow {
 		setClosable(true);
 		setIconifiable(true);
 		
-		lblCreateANew = new JLabel("<html>\r\nTransfer.\r\n</html>");
-		lblCreateANew.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCreateANew.setForeground(Color.RED);
-		lblCreateANew.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
-		lblCreateANew.setBounds(160, 11, 669, 40);
-		contentPane.add(lblCreateANew);
+		lblTransfer = new JLabel("<html>\r\nTransfer.\r\n</html>");
+		lblTransfer.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTransfer.setForeground(Color.RED);
+		lblTransfer.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
+		lblTransfer.setBounds(160, 11, 669, 40);
+		contentPane.add(lblTransfer);
 		
 		lblDesc = new JLabel("<html>\r\n- Transfer between a savings account and a securities account<br>\r\n</html>");
 		lblDesc.setHorizontalAlignment(SwingConstants.CENTER);
@@ -150,7 +152,7 @@ public class GUITransfer extends GUIInternalWindow {
 		comboBox_Type.addItemListener(ctl);
 		comboBox_Type.setModel(new DefaultComboBoxModel(new String[] {"USD", "CNY", "RUB"}));
 		comboBox_Type.setFont(new Font("Consolas", Font.PLAIN, 20));
-		comboBox_Type.setBackground(SystemColor.controlDkShadow);
+		comboBox_Type.setBackground(UIManager.getColor("Button.background"));
 		comboBox_Type.setBounds(40, 169, 160, 30);
 		contentPane.add(comboBox_Type);
 		
@@ -171,7 +173,7 @@ public class GUITransfer extends GUIInternalWindow {
 		comboBox_CashType.addItemListener(cashtl);
 		comboBox_CashType.setModel(new DefaultComboBoxModel(new String[] {"USD", "CNY", "RUB"}));
 		comboBox_CashType.setFont(new Font("Consolas", Font.PLAIN, 20));
-		comboBox_CashType.setBackground(SystemColor.controlDkShadow);
+		comboBox_CashType.setBackground(UIManager.getColor("Button.background"));
 		comboBox_CashType.setBounds(413, 169, 160, 30);
 		contentPane.add(comboBox_CashType);
 		
@@ -185,13 +187,13 @@ public class GUITransfer extends GUIInternalWindow {
 		lblPasswordOfThe.setBounds(414, 430, 425, 40);
 		contentPane.add(lblPasswordOfThe);
 		
-		JRadioButton rdbtn1 = new JRadioButton("from savings to securities");
+		rdbtn1 = new JRadioButton("from savings to securities");
 		rdbtn1.setSelected(true);
 		rdbtn1.setFont(new Font("Consolas", Font.PLAIN, 22));
 		rdbtn1.setBounds(600, 228, 357, 40);
 		contentPane.add(rdbtn1);
 		
-		JRadioButton rdbtn2 = new JRadioButton("from securites to savings");
+		rdbtn2 = new JRadioButton("from securites to savings");
 		rdbtn2.setFont(new Font("Consolas", Font.PLAIN, 22));
 		rdbtn2.setBounds(600, 271, 357, 40);
 		contentPane.add(rdbtn2);
@@ -233,34 +235,30 @@ public class GUITransfer extends GUIInternalWindow {
 			String type_up = dtm_up.getValueAt(idx_up, 2).toString();
 			Double balance_up = Double.valueOf(dtm_up.getValueAt(idx_up, 1).toString());
 			String accountNumber_up = dtm_up.getValueAt(idx_up, 0).toString();
-			
 			DefaultTableModel dtm_down = (DefaultTableModel) rightTable.getModel();
 			String type_down = dtm_down.getValueAt(idx_down, 2).toString();
 			Double balance_down = Double.valueOf(dtm_down.getValueAt(idx_down, 1).toString());
 			String accountNumber_down = dtm_down.getValueAt(idx_down, 0).toString();
 			
-			CurrencyUSD currencyUSD_up = new CurrencyUSD(balance_up, cashType);
+			CurrencyUSD currencyUSD_up = new CurrencyUSD(balance_up, currencyType);
 			balance_up = currencyUSD_up.getAmount();
+			CurrencyUSD currencyUSD_down = new CurrencyUSD(balance_down, currencyType);
+			balance_down = currencyUSD_down.getAmount();
 			
-			
-			
-			if (balance_up < 5000) {
-				JOptionPane.showMessageDialog(null, "Please select a savings account"
-						+ " which has more than 5000$!");
-				return;
-			}
-			String strPassword_1 = String.valueOf(passwordField_1.getPassword());
-			String strPassword_2 = String.valueOf(passwordField_2.getPassword());			
+			// check the format
+			String strPassword_up = String.valueOf(passwordField_1.getPassword());
+			String strPassword_down = String.valueOf(passwordField_2.getPassword());			
 			boolean invalid = false;
-			if (strPassword_1.length() == 0 || strPassword_2.length() == 0
-					|| strPassword_1.length() != strPassword_2.length()) {
-				invalid = true;
+			for (int i = 0; i < strPassword_up.length(); i ++) {
+				char c = strPassword_up.charAt(i);
+				if (!Character.isLetterOrDigit(c)) {
+					invalid = true;
+					break;
+				}
 			}
-			for (int i = 0; i < strPassword_1.length(); i ++) {
-				char c1 = strPassword_1.charAt(i);
-				char c2 = strPassword_2.charAt(i);
-				if (!Character.isLetterOrDigit(c1) || !Character.isLetterOrDigit(c2)
-						|| c1 != c2) {
+			for (int i = 0; i < strPassword_down.length(); i ++) {
+				char c = strPassword_down.charAt(i);
+				if (!Character.isLetterOrDigit(c)) {
 					invalid = true;
 					break;
 				}
@@ -270,6 +268,17 @@ public class GUITransfer extends GUIInternalWindow {
 						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			
+			// verify username and password in database
+			AccountDAO accountDAO = new AccountDAO();
+			if (!accountDAO.authenticate(accountNumber_up, strPassword_up) || 
+					!accountDAO.authenticate(accountNumber_down, strPassword_down)) {
+				JOptionPane.showMessageDialog(null, "Password doesn't match!", 
+						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			// check the format of the amount
 			String strAmount = textField.getText();
 			for (int i = 0; i < strAmount.length(); i ++) {
 				char c = strAmount.charAt(i);
@@ -281,70 +290,107 @@ public class GUITransfer extends GUIInternalWindow {
 			if (invalid) {
 				JOptionPane.showMessageDialog(null, "Invalid input!", 
 						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+				accountDAO.closeConn();
 				return;
 			}
-//			else {
-//				if (strAmount.length() >= 8) {
-//					JOptionPane.showMessageDialog(null, "One transaction can't exceed 10000$!", 
-//							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				double amount = convertCash(Double.valueOf(strAmount));
-//				if (amount > 10000) {
-//					JOptionPane.showMessageDialog(null, "One transaction can't exceed 10000$!", 
-//							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				else if (amount <= 1000) {
-//					JOptionPane.showMessageDialog(null, "One transaction must exceed 1000$!", 
-//							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				AccountDAO accountDAO = new AccountDAO();
-//				String newID = accountDAO.openNewAccount(username, accountType, strPassword_1);
-//				Transactions transaction = new Transactions(username, "", accountNumber, 
-//						null, null, Transactions.TYPE_4, newID, amount);
-//				if (accountDAO.depositMoney(accountNumber, -amount, transaction) && 
-//						accountDAO.depositMoney(newID, amount, null)) {
-//					JOptionPane.showMessageDialog(null, "Successfully transfered!");
-//					setTable(accountDAO.getAccounts(username));
-//				}
-//				else {
-//					JOptionPane.showMessageDialog(null, "Failed!", 
-//							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
-//				}
-//				accountDAO.closeConn();
-//			}
+			
+			// check the scope of data
+			if (strAmount.length() >= 8) {
+				JOptionPane.showMessageDialog(null, "One transaction can't exceed 10000$!",
+						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+				accountDAO.closeConn();
+				return;
+			}
+			double amount = convertCash(Double.valueOf(strAmount));
+			if (amount > 10000) {
+				JOptionPane.showMessageDialog(null, "One transaction can't exceed 10000$!", 
+						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+				accountDAO.closeConn();
+				return;
+			}
+			else if (amount <= 1000) {
+				JOptionPane.showMessageDialog(null, "One transaction must exceed 1000$!", 
+						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+				accountDAO.closeConn();
+				return;
+			}
+			
+			if (rdbtn1.isSelected()) {
+				// SavingsToSecurities
+				if (balance_up < 5000) {
+					JOptionPane.showMessageDialog(null, "Please select a savings account"
+							+ " which has more than 5000$!");
+					accountDAO.closeConn();
+					return;
+				}
+				if (accountDAO.getAllBalanceOfSavings(username) < SavingsAccounts.MINSUM) {
+					JOptionPane.showMessageDialog(null, "The sum of balance of all your savings "
+							+ "accounts can't be less than " + SavingsAccounts.MINSUM + "!");
+					accountDAO.closeConn();
+					return;
+				}
+				Transactions transaction = new Transactions(username, "", accountNumber_up, 
+						null, null, Transactions.TYPE_4, accountNumber_down, amount);
+				if (accountDAO.depositMoney(accountNumber_up, -amount, transaction) && 
+						accountDAO.depositMoney(accountNumber_down, amount, null)) {
+					JOptionPane.showMessageDialog(null, "Successfully transfered!");
+					setTable(accountDAO.getAccounts(username));
+					accountDAO.closeConn();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Failed!", 
+							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+					accountDAO.closeConn();
+				}
+			}
+			else if (rdbtn2.isSelected()) {
+				// SecuritiesToSavings
+				if (accountDAO.getBalance(accountNumber_down) < amount) {
+					JOptionPane.showMessageDialog(null, "No enough balance");
+					accountDAO.closeConn();
+					return;
+				}
+				Transactions transaction = new Transactions(username, "", accountNumber_down, 
+						null, null, Transactions.TYPE_4, accountNumber_up, amount);
+				if (accountDAO.depositMoney(accountNumber_down, -amount, transaction) && 
+						accountDAO.depositMoney(accountNumber_up, amount, null)) {
+					JOptionPane.showMessageDialog(null, "Successfully transfered!");
+					setTable(accountDAO.getAccounts(username));
+					accountDAO.closeConn();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Failed!", 
+							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+					accountDAO.closeConn();
+				}
+			}
 		}
 	}
-		
+	
 	protected double convertCash(double x) {
-		CurrencyUSD USD = new CurrencyUSD(x);
+		CurrencyUSD USD = null;
 		if (cashType.compareTo(CurrencyUSD.abbr) == 0) {
 			return x;
 		}
 		else if (cashType.compareTo(CurrencyCNY.abbr) == 0) {
-			CurrencyCNY CNY = new CurrencyCNY(USD);
-			return CNY.getAmount();
+			USD = new CurrencyUSD(x, CurrencyCNY.abbr);
 		}
 		else if (cashType.compareTo(CurrencyRUB.abbr) == 0) {
-			CurrencyRUB RUB = new CurrencyRUB(USD);
-			return RUB.getAmount();
+			USD = new CurrencyUSD(x, CurrencyRUB.abbr);
 		}
-		return x;
+		return USD.getAmount();
 	}
 	
-	private double convertCur(double x) {
-		CurrencyUSD USD = new CurrencyUSD(x);
+	protected double convertCur(double x) {
 		if (currencyType.compareTo(CurrencyUSD.abbr) == 0) {
 			return x;
 		}
 		else if (currencyType.compareTo(CurrencyCNY.abbr) == 0) {
-			CurrencyCNY CNY = new CurrencyCNY(USD);
+			CurrencyCNY CNY = new CurrencyCNY(new CurrencyUSD(x));
 			return CNY.getAmount();
 		}
 		else if (currencyType.compareTo(CurrencyRUB.abbr) == 0) {
-			CurrencyRUB RUB = new CurrencyRUB(USD);
+			CurrencyRUB RUB = new CurrencyRUB(new CurrencyUSD(x));
 			return RUB.getAmount();
 		}
 		return x;

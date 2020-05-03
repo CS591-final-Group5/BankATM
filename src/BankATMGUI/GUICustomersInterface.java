@@ -148,12 +148,15 @@ public class GUICustomersInterface extends JFrame {
 		menuBar.add(mnStockMarket);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Open stock market");
+		mntmNewMenuItem.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/OpenStockMarket.png")));
 		mnStockMarket.add(mntmNewMenuItem);
 		
 		JMenu mnHelp = new JMenu("Help");
+		mnHelp.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Help.png")));
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmHelp = new JMenuItem("About us");
+		mntmHelp.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/AboutMe.png")));
 		AboutUsListener aul = new AboutUsListener();
 		mntmHelp.addActionListener(aul);
 		mnHelp.add(mntmHelp);
