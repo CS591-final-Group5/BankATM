@@ -31,10 +31,8 @@ public class AccountDAO extends Database {
 		 * Find if there is a user who has the same UserName as 'username' 
 		 */
 		try {
-			Class.forName(JDBC);
-			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
 			Statement stmt = conn.createStatement();
-			String  sql = "select * from users where username='" + username + "'";
+			String sql = "select * from users where username='" + username + "'";
             ResultSet res = stmt.executeQuery(sql);
             if(res.next() == false){
             	// check if res == null
@@ -42,7 +40,6 @@ public class AccountDAO extends Database {
             }
             res.close();
             stmt.close();
-            conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,14 +51,11 @@ public class AccountDAO extends Database {
 		 * Create a new user account that could sign in BanKATM system
 		 */
 		try {
-			Class.forName(JDBC);
-			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
 			Statement stmt = conn.createStatement();
 			String sql = "insert into users " + 
 					     "values ('" + username + "', '" + password + 
 			             "', '" + email + "', '" + fullname + "')";
             stmt.executeUpdate(sql);
-            conn.close();
             stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,21 +64,17 @@ public class AccountDAO extends Database {
 	
 	public boolean userLogin(String username, String password) {
 		try {
-			Class.forName(JDBC);
-			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
 			Statement stmt = conn.createStatement();
 			String sql = "select * from users where username='" + username + "'";
 			ResultSet res = stmt.executeQuery(sql);
 			if(res.next() == false){
 				res.close();
-				conn.close();
 	            stmt.close();
 				return false;
 			}
 			else {
 				String dbPassword = res.getString("password");
 				res.close();
-				conn.close();
 	            stmt.close();
 				return dbPassword.compareTo(password) == 0 ? true : false;
 			}
@@ -100,15 +90,12 @@ public class AccountDAO extends Database {
 		 * Change the password of your BankATM account
 		 */
 		try {
-			Class.forName(JDBC);
-			Connection conn = DriverManager.getConnection(URL_DB, USERNAME, PASSWORD);
 			Statement stmt = conn.createStatement();
 			String sql = "update users " +
 			             "set password='" + password + "' " +
 					     "where username='" + username + "'";
 			stmt.executeUpdate(sql);
 			stmt.close();
-			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -46,7 +46,7 @@ public class GUIBankManagerLogin extends JFrame {
 		lblHeadline.setBounds(153, 27, 509, 120);
 		contentPane.add(lblHeadline);
 		
-		textUsername = new JTextField();
+		textUsername = new JTextField("BMcpk");
 		textUsername.setHorizontalAlignment(SwingConstants.CENTER);
 		textUsername.setFont(new Font("Consolas", Font.PLAIN, 20));
 		textUsername.setToolTipText("");
@@ -103,8 +103,10 @@ public class GUIBankManagerLogin extends JFrame {
 				String strUsername = textUsername.getText();
 				String strPassword = String.valueOf(passwordField.getPassword());
 				ManagerDAO managerDAO = new ManagerDAO();
-				if (managerDAO.verification(strUsername, strPassword)) {
+				if (managerDAO.authenticate(strUsername, strPassword)) {
 					setVisible(false);
+					GUIManagerInterface frame = new GUIManagerInterface(strUsername);
+					frame.setVisible(true);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Wrong username or wrong password!", 

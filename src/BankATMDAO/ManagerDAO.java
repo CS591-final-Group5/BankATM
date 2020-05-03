@@ -56,6 +56,24 @@ public class ManagerDAO extends Database {
 		return null;
 	}
 	
+	public void addDate() {
+		Date date = getDate(1);
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.add(Calendar.DATE, 1);
+		Date newDate = new Date(c.getTimeInMillis());
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "update manager " +
+		                 "set currenttime='" + newDate + "' " +
+				         "where username='" + bankManagerUsername + "'";
+			stmt.executeUpdate(sql);
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void createAccount() {
 		try {
 			Statement stmt = conn.createStatement();
@@ -88,29 +106,97 @@ public class ManagerDAO extends Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		Calendar c = Calendar.getInstance();
 		c.setTime(start_date);
 		boolean halt = false;
 		do {
 			Date date = new Date(c.getTimeInMillis());
 			dates.add(date);
-			if (date == current_date) {
+			if (date.toString().compareTo(current_date.toString()) == 0) {
 				halt = true;
 			}
 			else {
-				c.set(Calendar.DAY_OF_MONTH, 1);
+				System.out.println("in");
+				c.add(Calendar.DAY_OF_MONTH, 1);
 			}
-		} while (halt);
+		} while (!halt);
 		return dates;
 	}
 	
-	public boolean compareDates(Date day1, Date day2) {
-		/*
-		 * Only compare year, month and day
-		 */
-		//String str1 = Date.valueOf(day1.toString());
-		
+	public boolean authenticate(String username, String password) {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from manager";
+			ResultSet res = stmt.executeQuery(sql);
+			res.next();
+			if (res.getString("username").compareTo(username) == 0 &&
+					res.getString("password").compareTo(password) == 0) {
+				return true;
+			}
+			res.close();
+			stmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return false;
+	}
+	
+	public void changePassword(String username, String password) {
+		/*
+		 * Change the password of manager's account
+		 */
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "update manager " +
+			             "set password='" + password + "' " +
+					     "where username='" + username + "'";
+			stmt.executeUpdate(sql);
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void chargeFee(double fee) {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "update manager " +
+			             "set profit=profit + " + String.valueOf(fee);
+			stmt.executeUpdate(sql);
+			stmt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<String> getAllUser() {
+		/*
+		 * Get all users
+		 */
+		ArrayList<String> users = new ArrayList<String> ();
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "select * from users";
+            ResultSet res = stmt.executeQuery(sql);
+            if(res.next() == false){
+            	res.close();
+                stmt.close();
+            	return users;
+            }
+            else {
+            	do {
+            		users.add(res.getString("username"));;
+            	} while (res.next());
+            	res.close();
+                stmt.close();
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return users;
 	}
 	
 	public String getBankMangerUsername() {
@@ -123,14 +209,6 @@ public class ManagerDAO extends Database {
 
 	public void setBankMangerPassword(String bankMangerPassword) {
 		this.bankManagerPassword = bankMangerPassword;
-	}
-	
-	public boolean verification(String username, String password) {
-		if (username.compareTo(bankManagerUsername) == 0 &&
-				password.compareTo(bankManagerPassword) == 0) {
-			return true;
-		}
-		return false;
 	}
 	
 }

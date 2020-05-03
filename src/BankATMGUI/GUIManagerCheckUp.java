@@ -21,22 +21,25 @@ import BankATMCommon.CurrencyRUB;
 import BankATMCommon.CurrencyUSD;
 import BankATMCommon.Transactions;
 
-public class GUIDisplayTransactions extends GUIInternalWindow {
+public class GUIManagerCheckUp extends JInternalFrame {
 
-	private String username;
 	private JPanel contentPane;
 	private JTable transactionsTable;
 	private String currencyType = "USD"; // default
 	private JComboBox comboBox_Date;
 	private JComboBox comboBox_CashType;
 	private String specifiedDate;
+	private String specifiedUsername = "";
+	private JTable userTable;
+	private JButton btnCheckUp;
+	private JButton btnClose;
 	
 	/**
 	 * Create the frame.
 	 */
-	public GUIDisplayTransactions(String username) {
-		this.username = username;
-		this.setTitle("Display transactions");
+	public GUIManagerCheckUp() {
+		this.setTitle("Check up on a customer");
+		setBounds(10, 10, 1000, 650);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -46,15 +49,22 @@ public class GUIDisplayTransactions extends GUIInternalWindow {
 		setClosable(true);
 		setIconifiable(true);
 		
-		JButton btnClose = new JButton("Close");
-		btnClose.setBounds(460, 460, 270, 60);
+		btnClose = new JButton("Close");
+		btnClose.setBounds(661, 535, 270, 60);
 		CloseListener cl = new CloseListener();
 		btnClose.addActionListener(cl);
 		btnClose.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		getContentPane().add(btnClose);
 		
+		btnCheckUp = new JButton("Check Up");
+		btnCheckUp.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		btnCheckUp.setBounds(109, 535, 270, 60);
+		CheckUpListener cul = new CheckUpListener();
+		btnCheckUp.addActionListener(cul);
+		contentPane.add(btnCheckUp);
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(45, 174, 705, 260);
+		scrollPane.setBounds(260, 180, 705, 328);
 		contentPane.add(scrollPane);
 		
 		transactionsTable = new JTable();
@@ -86,27 +96,16 @@ public class GUIDisplayTransactions extends GUIInternalWindow {
 			transactionsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
 		}
 		
-		JLabel lblDisplayTransactions = new JLabel("<html>\r\nDisplay transactions.\r\n</html>");
+		JLabel lblDisplayTransactions = new JLabel("<html>\r\nCheck up on a customer.\r\n</html>");
 		lblDisplayTransactions.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDisplayTransactions.setForeground(Color.RED);
 		lblDisplayTransactions.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
-		lblDisplayTransactions.setBounds(61, 11, 669, 66);
+		lblDisplayTransactions.setBounds(170, 11, 669, 66);
 		contentPane.add(lblDisplayTransactions);
-		
-		JLabel lblCurrentUser = new JLabel("Current User: ");
-		lblCurrentUser.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblCurrentUser.setBounds(100, 84, 160, 40);
-		contentPane.add(lblCurrentUser);
-		
-		JLabel lblCurrentUsername = new JLabel(username);
-		lblCurrentUsername.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCurrentUsername.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblCurrentUsername.setBounds(325, 84, 232, 40);
-		contentPane.add(lblCurrentUsername);
 		
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblDate.setBounds(100, 130, 110, 40);
+		lblDate.setBounds(335, 129, 110, 40);
 		contentPane.add(lblDate);
 		
 		comboBox_Date = new JComboBox();
@@ -114,13 +113,13 @@ public class GUIDisplayTransactions extends GUIInternalWindow {
 		comboBox_Date.addItemListener(dl);
 		comboBox_Date.setFont(new Font("Consolas", Font.PLAIN, 20));
 		comboBox_Date.setBackground(SystemColor.controlDkShadow);
-		comboBox_Date.setBounds(179, 133, 160, 30);
+		comboBox_Date.setBounds(414, 132, 160, 30);
 		setComboBox(comboBox_Date);
 		contentPane.add(comboBox_Date);
 		
 		JLabel lblCurrencyType = new JLabel("Currency type: ");
 		lblCurrencyType.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblCurrencyType.setBounds(386, 130, 178, 40);
+		lblCurrencyType.setBounds(627, 129, 178, 40);
 		contentPane.add(lblCurrencyType);
 		
 		comboBox_CashType = new JComboBox();
@@ -129,16 +128,60 @@ public class GUIDisplayTransactions extends GUIInternalWindow {
 		comboBox_CashType.setModel(new DefaultComboBoxModel(new String[] {"USD", "CNY", "RUB"}));
 		comboBox_CashType.setFont(new Font("Consolas", Font.PLAIN, 20));
 		comboBox_CashType.setBackground(SystemColor.controlDkShadow);
-		comboBox_CashType.setBounds(559, 133, 160, 30);
+		comboBox_CashType.setBounds(800, 132, 160, 30);
 		contentPane.add(comboBox_CashType);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(38, 180, 186, 328);
+		contentPane.add(scrollPane_1);
+		
+		userTable = new JTable();
+		userTable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"USERNAME"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		userTable.getColumnModel().getColumn(0).setPreferredWidth(146);
+		scrollPane_1.setViewportView(userTable);
+		
+		JLabel lblSelectA = new JLabel("<html>\r\n- Select a user and a specific date, then click \"Check Up\".\r\n</html>");
+		lblSelectA.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSelectA.setForeground(Color.DARK_GRAY);
+		lblSelectA.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
+		lblSelectA.setBounds(139, 64, 700, 60);
+		contentPane.add(lblSelectA);
+		
 		ManagerDAO managerDAO = new ManagerDAO();
+		setUserTable(managerDAO.getAllUser());
 		specifiedDate = managerDAO.getDate(0).toString();
 		TransactionsDAO transactionsDAO = new TransactionsDAO();
-		setTable(transactionsDAO.getTransactions(username));
+		setTable(transactionsDAO.getTransactions(specifiedUsername));
 		transactionsDAO.closeConn();
-		managerDAO.chargeFee(1);
 		managerDAO.closeConn();
+	}
+	
+	class CheckUpListener implements ActionListener {
+		public void actionPerformed( ActionEvent e ) {
+			int idx = userTable.getSelectedRow();
+			if (idx == -1) {
+				JOptionPane.showMessageDialog(null, "Please select a user");
+				return;
+			}
+			DefaultTableModel dtm = (DefaultTableModel) userTable.getModel();
+			specifiedUsername = dtm.getValueAt(idx, 0).toString();
+			TransactionsDAO transactionsDAO = new TransactionsDAO();
+			setTable(transactionsDAO.getTransactions(specifiedUsername));
+			transactionsDAO.closeConn();
+		}
 	}
 	
 	class DateListener implements ItemListener {
@@ -146,9 +189,6 @@ public class GUIDisplayTransactions extends GUIInternalWindow {
 			JComboBox jcb = (JComboBox)e.getSource();
 			if (e.getStateChange() == ItemEvent.SELECTED) {
 				specifiedDate = jcb.getSelectedItem().toString();
-				TransactionsDAO transactionsDAO = new TransactionsDAO();
-				setTable(transactionsDAO.getTransactions(username));
-				transactionsDAO.closeConn();
 			}
 		}
 	}
@@ -164,6 +204,16 @@ public class GUIDisplayTransactions extends GUIInternalWindow {
 		managerDAO.closeConn();
 		for (Date d: dates) {
 			jcb.addItem(d);
+		}
+	}
+	
+	private void setUserTable(ArrayList<String> users) {
+		DefaultTableModel dtm = (DefaultTableModel) userTable.getModel();
+		dtm.setRowCount(0);
+		for (String s: users) {
+			Vector v = new Vector();
+			v.add(s);
+			dtm.addRow(v);
 		}
 	}
 	
@@ -204,7 +254,7 @@ public class GUIDisplayTransactions extends GUIInternalWindow {
 				currencyType = jcb.getSelectedItem().toString();
 			}
 			TransactionsDAO transactionsDAO = new TransactionsDAO();
-			setTable(transactionsDAO.getTransactions(username));
+			setTable(transactionsDAO.getTransactions(specifiedUsername));
 			transactionsDAO.closeConn();
 		}
 	}
