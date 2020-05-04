@@ -27,7 +27,7 @@ public class GUIDisplayAllLoans extends GUIInternalWindow {
 	 */
 	public GUIDisplayAllLoans() {
 		super();
-		this.setTitle("Display loans");
+		this.setTitle("Display all loans");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -142,6 +142,5 @@ public class GUIDisplayAllLoans extends GUIInternalWindow {
 			v.add(convertCur(l.getAmount()));
 			dtm.addRow(v);
 		}
-		System.out.println("ddd");
 	}
 }

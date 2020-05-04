@@ -15,11 +15,7 @@ import javax.swing.border.EmptyBorder;
 import BankATMDAO.*;
 
 
-import BankATMCommon.Accounts;
-import BankATMCommon.CurrencyCNY;
-import BankATMCommon.CurrencyRUB;
-import BankATMCommon.CurrencyUSD;
-import BankATMCommon.Transactions;
+import BankATMCommon.*;
 
 public class GUIDisplayTransactions extends GUIInternalWindow {
 
@@ -134,11 +130,14 @@ public class GUIDisplayTransactions extends GUIInternalWindow {
 		
 		ManagerDAO managerDAO = new ManagerDAO();
 		specifiedDate = managerDAO.getDate(0).toString();
+		managerDAO.chargeFee(1);
+		managerDAO.closeConn();
+		AccountDAO accountsDAO = new AccountDAO();
+		accountsDAO.chargeFee(username);
+		accountsDAO.closeConn();
 		TransactionsDAO transactionsDAO = new TransactionsDAO();
 		setTable(transactionsDAO.getTransactions(username));
 		transactionsDAO.closeConn();
-		managerDAO.chargeFee(1);
-		managerDAO.closeConn();
 	}
 	
 	class DateListener implements ItemListener {

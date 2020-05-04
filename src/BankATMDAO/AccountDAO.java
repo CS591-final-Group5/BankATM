@@ -62,6 +62,27 @@ public class AccountDAO extends Database {
 		return "";
 	}
 	
+	public void chargeFee(String username) {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql_1 = "select * from accounts where username='" + username + "'";
+            ResultSet res = stmt.executeQuery(sql_1);
+            if (res.next() == false) {
+            	res.close();
+                stmt.close();
+                return;
+            }
+            String sql_2 = "update accounts " + 
+                           "set balance=balance-1 " + 
+            		       "where accountnumber='" + res.getString("accountnumber") + "'";
+            stmt.executeUpdate(sql_2);
+            res.close();
+            stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void createUser(String username, String password, String email, String fullname) {
 		/*
 		 * Create a new user account that could sign in BanKATM system
@@ -137,7 +158,7 @@ public class AccountDAO extends Database {
 			
 			String sql_2 = "insert into accounts " + 
 					     "values ('" + username + "', '" + String.valueOf(accountNumber) + 
-			             "', '" + password + "', " + String.valueOf(0) + ", '" + 
+			             "', '" + password + "', " + String.valueOf(-1) + ", '" + 
 					     type + "')";
             stmt.executeUpdate(sql_2);
             // add a transaction

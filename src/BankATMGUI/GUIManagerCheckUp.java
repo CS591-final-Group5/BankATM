@@ -13,13 +13,7 @@ import javax.swing.table.*;
 import javax.swing.border.EmptyBorder;
 
 import BankATMDAO.*;
-
-
-import BankATMCommon.Accounts;
-import BankATMCommon.CurrencyCNY;
-import BankATMCommon.CurrencyRUB;
-import BankATMCommon.CurrencyUSD;
-import BankATMCommon.Transactions;
+import BankATMCommon.*;
 
 public class GUIManagerCheckUp extends JInternalFrame {
 

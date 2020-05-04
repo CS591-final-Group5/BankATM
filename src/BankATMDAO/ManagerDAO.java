@@ -20,7 +20,6 @@ public class ManagerDAO extends Database {
 			Statement stmt = conn.createStatement();
 			ResultSet res = stmt.executeQuery(sql);
 			if(res.next() == false){
-				System.out.println("ahhahaha");
 				createAccount();
 			}
 			res.close();
@@ -153,7 +152,6 @@ public class ManagerDAO extends Database {
 					     "where username='" + username + "'";
 			stmt.executeUpdate(sql);
 			stmt.close();
-			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -166,7 +164,6 @@ public class ManagerDAO extends Database {
 			             "set profit=profit + " + String.valueOf(fee);
 			stmt.executeUpdate(sql);
 			stmt.close();
-			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -216,6 +213,50 @@ public class ManagerDAO extends Database {
 			e.printStackTrace();
 		}
 		return users;
+	}
+	
+	public void payInterestOnSavingsAccount() {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql_1 = "select count(*) as total from accounts A " + 
+			             "where A.type='Savings' and A.balance > 5000";
+			ResultSet res = stmt.executeQuery(sql_1);
+			if (res.next() != false) {
+				chargeFee(-res.getInt("total"));
+			}
+			
+			String sql_2 = "update accounts " + 
+			               "set balance=balance+1 " + 
+					       "where type='Savings' and balance > 5000";
+			stmt.executeUpdate(sql_2);
+			
+			res.close();
+	        stmt.close();	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void chargeInterstOnloans() {
+		try {
+			Statement stmt = conn.createStatement();
+			String sql_1 = "select count(*) as total from loans";
+			ResultSet res = stmt.executeQuery(sql_1);
+			if (res.next() != false) {
+				chargeFee(res.getInt("total"));
+			}
+			
+			String sql_2 = "update accounts A " + 
+			               "set balance=balance-1 " + 
+					       "where A.accountnumber=( select B.accountnumber " + 
+			               "from loans B)";
+			stmt.executeUpdate(sql_2);
+			
+			res.close();
+	        stmt.close();			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String getBankMangerUsername() {

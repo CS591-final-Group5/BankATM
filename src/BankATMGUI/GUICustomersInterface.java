@@ -1,26 +1,10 @@
 package BankATMGUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JToolBar;
-import javax.swing.JTabbedPane;
-import javax.swing.JComboBox;
-import java.awt.Panel;
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JDesktopPane;
 
 public class GUICustomersInterface extends JFrame {
 
@@ -147,9 +131,11 @@ public class GUICustomersInterface extends JFrame {
 		mnStockMarket.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/StockMarket.png")));
 		menuBar.add(mnStockMarket);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Open stock market");
-		mntmNewMenuItem.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/OpenStockMarket.png")));
-		mnStockMarket.add(mntmNewMenuItem);
+		JMenuItem mntmOpenStockMarket = new JMenuItem("Open stock market");
+		OpenStockMarketListener osml = new OpenStockMarketListener();
+		mntmOpenStockMarket.addActionListener(osml);
+		mntmOpenStockMarket.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/OpenStockMarket.png")));
+		mnStockMarket.add(mntmOpenStockMarket);
 		
 		JMenu mnHelp = new JMenu("Help");
 		mnHelp.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Help.png")));
@@ -164,6 +150,22 @@ public class GUICustomersInterface extends JFrame {
 		contentPane.add(desktopPane);
 		
 		setLocationRelativeTo(null);
+	}
+	
+	class OpenStockMarketListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUIStockMarket frame = new GUIStockMarket(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 	
 	class RequestLoanListener implements ActionListener {

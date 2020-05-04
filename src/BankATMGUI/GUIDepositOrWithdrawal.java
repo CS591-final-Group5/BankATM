@@ -1,26 +1,13 @@
 package BankATMGUI;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import BankATMCommon.Accounts;
-import BankATMCommon.CheckingAccounts;
-import BankATMCommon.CurrencyCNY;
-import BankATMCommon.CurrencyRUB;
-import BankATMCommon.CurrencyUSD;
-import BankATMCommon.SavingsAccounts;
+import BankATMCommon.*;
 
 public class GUIDepositOrWithdrawal extends GUIInternalWindow {
 

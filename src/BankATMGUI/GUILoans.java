@@ -341,6 +341,5 @@ public class GUILoans extends GUIInternalWindow {
 			v.add(convertCur(l.getAmount()));
 			dtm.addRow(v);
 		}
-		System.out.println("ddd");
 	}
 }

@@ -1,26 +1,12 @@
 package BankATMGUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+
 import javax.swing.border.EmptyBorder;
-import javax.swing.JToolBar;
-import javax.swing.JTabbedPane;
-import javax.swing.JComboBox;
-import java.awt.Panel;
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JDesktopPane;
+
+import java.awt.event.*;
 
 public class GUIManagerInterface extends JFrame {
 
@@ -113,9 +99,17 @@ public class GUIManagerInterface extends JFrame {
 		mnStockMarket.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/StockMarket.png")));
 		menuBar.add(mnStockMarket);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Open stock market");
-		mntmNewMenuItem.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/OpenStockMarket.png")));
-		mnStockMarket.add(mntmNewMenuItem);
+		JMenuItem mntmCreateStocks = new JMenuItem("Create stocks");
+		mntmCreateStocks.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/CreateStocks.png")));
+		CreateStocksListener css = new CreateStocksListener();
+		mntmCreateStocks.addActionListener(css);
+		mnStockMarket.add(mntmCreateStocks);
+		
+		JMenuItem mntmModifyPrice = new JMenuItem("Modify Price");
+		ModifyStocksListener msl = new ModifyStocksListener();
+		mntmModifyPrice.addActionListener(msl);
+		mntmModifyPrice.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/ModifyPrice.png")));
+		mnStockMarket.add(mntmModifyPrice);
 		
 		JMenu mnHelp = new JMenu("Help");
 		mnHelp.setIcon(new ImageIcon(GUIManagerInterface.class.getResource("/Icons/Help.png")));
@@ -130,6 +124,38 @@ public class GUIManagerInterface extends JFrame {
 		contentPane.add(desktopPane);
 		
 		setLocationRelativeTo(null);
+	}
+	
+	class ModifyStocksListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUIModifyStocksPrice frame = new GUIModifyStocksPrice();
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class CreateStocksListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUICreateStocks frame = new GUICreateStocks();
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 	
 	class DisplayLoansListener implements ActionListener {

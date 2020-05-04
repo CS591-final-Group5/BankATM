@@ -158,6 +158,11 @@ public class GUIOpenAccounts extends GUIInternalWindow {
 					|| strPassword_1.length() != strPassword_2.length()) {
 				invalid = true;
 			}
+			if (invalid) {
+				JOptionPane.showMessageDialog(null, "Invalid character!", 
+						"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			for (int i = 0; i < strPassword_1.length(); i ++) {
 				char c1 = strPassword_1.charAt(i);
 				char c2 = strPassword_2.charAt(i);

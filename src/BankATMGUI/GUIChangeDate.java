@@ -1,23 +1,12 @@
 package BankATMGUI;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import BankATMDAO.*;
-import java.awt.Color;
 
 public class GUIChangeDate extends GUIInternalWindow {
 
@@ -98,6 +87,8 @@ public class GUIChangeDate extends GUIInternalWindow {
 			ManagerDAO managerDAO = new ManagerDAO();
 			managerDAO.addDate();
 			lblCurrentDate_DB.setText(managerDAO.getDate(1).toString());
+			managerDAO.payInterestOnSavingsAccount();
+			managerDAO.chargeInterstOnloans();
 			managerDAO.closeConn();
 		}
 	}

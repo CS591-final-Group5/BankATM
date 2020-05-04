@@ -124,9 +124,27 @@ public class Database {
 						       "primary key( accountnumber ))";
 				stmtDB.executeUpdate(sql_7);
 				/*
-				 * Create 
+				 * Create table stocks
 				 */
-				
+				String sql_8 = "create table stocks (" + 
+						       "stockname varchar(255) not null, " +
+					           "amount integer not null, " +
+						       "price double not null, " +
+					           "primary key( stockname ))";
+				stmtDB.executeUpdate(sql_8);
+				/*
+				 * Create table stockdeal
+				 */
+				String sql_9 = "create table stockdeal (" + 
+						       "sid varchar(255) not null, " +
+						       "accountnumber varchar(255) not null, " +
+					           "stockname varchar(255) not null, " +
+				               "amount integer not null, " +
+					           "bidprice double not null, " +
+				               "currentprice double not null, " +
+				               "type varchar(255) not null, " +
+				               "primary key( sid ))";
+				stmtDB.executeUpdate(sql_9);
 				stmtDB.close();
 			}
 			conn.close();
