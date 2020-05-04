@@ -250,9 +250,4 @@ public class GUICreateStocks extends GUIInternalWindow {
 		}
 	}
 	
-	class CloseListener implements ActionListener {
-		public void actionPerformed( ActionEvent e ) {
-			setVisible(false);
-		}
-	}
 }

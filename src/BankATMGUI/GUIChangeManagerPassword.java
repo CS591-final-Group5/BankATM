@@ -89,12 +89,6 @@ public class GUIChangeManagerPassword extends GUIInternalWindow {
 		lblCurrentUsername.setBounds(306, 119, 232, 40);
 		contentPane.add(lblCurrentUsername);
 	}
-
-	class CloseListener implements ActionListener {
-		public void actionPerformed( ActionEvent e ) {
-			setVisible(false);
-		}
-	}
 	
 	class ChangeListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {

@@ -138,6 +138,22 @@ public class AccountDAO extends Database {
 		}
 	}
 	
+	public void changePasswordOfCard(String accountNumber, String password) {
+		/*
+		 * Change the password of a specified card
+		 */
+		try {
+			Statement stmt = conn.createStatement();
+			String sql = "update accounts " +
+			             "set password='" + password + "' " +
+					     "where accountnumber='" + accountNumber + "'";
+			stmt.executeUpdate(sql);
+			stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public String openNewAccount(String username, String type, String password) {
 		/*
 		 * Open a savings/checking/securities account

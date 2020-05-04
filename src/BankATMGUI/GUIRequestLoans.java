@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import BankATMCommon.*;
 import BankATMDAO.*;
 
-public class GUILoans extends GUIInternalWindow {
+public class GUIRequestLoans extends GUIInternalWindow {
 
 	private String username;
 	private JPanel contentPane;
@@ -37,7 +37,7 @@ public class GUILoans extends GUIInternalWindow {
 	/**
 	 * Create the frame.
 	 */
-	public GUILoans(String username) {
+	public GUIRequestLoans(String username) {
 		super();
 		this.username = username;
 		this.setTitle("Loans");

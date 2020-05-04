@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import BankATMDAO.*;
 
-public class GUIChangeDate extends GUIInternalWindow {
+public class GUIGetCurrentDate extends GUIInternalWindow {
 
 	private JPanel contentPane;
 	private JButton btnChange;
@@ -20,9 +20,9 @@ public class GUIChangeDate extends GUIInternalWindow {
 	/**
 	 * Create the frame.
 	 */
-	public GUIChangeDate() {
+	public GUIGetCurrentDate() {
 		super();
-		setBounds(100, 100, 500, 500);
+		setBounds(100, 100, 500, 350);
 		this.setTitle("Change date");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -33,7 +33,8 @@ public class GUIChangeDate extends GUIInternalWindow {
 		setClosable(true);
 		setIconifiable(true);
 		
-		JLabel lblHeadline = new JLabel("<html>\r\nChange Date.\r\n</html>");
+		JLabel lblHeadline = new JLabel("<html>\r\nDate.\r\n</html>");
+		lblHeadline.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeadline.setForeground(new Color(255, 0, 0));
 		lblHeadline.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
 		lblHeadline.setBounds(165, 11, 170, 66);
@@ -43,19 +44,19 @@ public class GUIChangeDate extends GUIInternalWindow {
 		CloseListener bl = new CloseListener();
 		btnClose.addActionListener(bl);
 		btnClose.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnClose.setBounds(110, 377, 270, 60);
+		btnClose.setBounds(110, 229, 270, 60);
 		contentPane.add(btnClose);
 		
 		lblStartDate = new JLabel("Start date:");
 		lblStartDate.setFont(new Font("Consolas", Font.PLAIN, 25));
 		lblStartDate.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStartDate.setBounds(23, 109, 210, 50);
+		lblStartDate.setBounds(23, 88, 210, 50);
 		contentPane.add(lblStartDate);
 		
 		lblCurrentDate = new JLabel("Current date:");
 		lblCurrentDate.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentDate.setFont(new Font("Consolas", Font.PLAIN, 25));
-		lblCurrentDate.setBounds(10, 189, 210, 50);
+		lblCurrentDate.setBounds(10, 168, 210, 50);
 		contentPane.add(lblCurrentDate);
 		
 		ManagerDAO managerDAO = new ManagerDAO();
@@ -63,34 +64,21 @@ public class GUIChangeDate extends GUIInternalWindow {
 		lblStartDate_DB = new JLabel(managerDAO.getDate(0).toString());
 		lblStartDate_DB.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStartDate_DB.setFont(new Font("Consolas", Font.PLAIN, 25));
-		lblStartDate_DB.setBounds(255, 109, 210, 50);
+		lblStartDate_DB.setBounds(255, 88, 210, 50);
 		contentPane.add(lblStartDate_DB);
 		
 		lblCurrentDate_DB = new JLabel(managerDAO.getDate(1).toString());
 		lblCurrentDate_DB.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCurrentDate_DB.setFont(new Font("Consolas", Font.PLAIN, 25));
-		lblCurrentDate_DB.setBounds(255, 189, 210, 50);
+		lblCurrentDate_DB.setBounds(255, 168, 210, 50);
 		contentPane.add(lblCurrentDate_DB);
-		
-		JButton btnAdd = new JButton("Add one day");
-		AddListener al = new AddListener();
-		btnAdd.addActionListener(al);
-		btnAdd.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnAdd.setBounds(110, 287, 270, 60);
-		contentPane.add(btnAdd);
 		
 		managerDAO.closeConn();
 	}
-
-	class AddListener implements ActionListener {
+	
+	class CloseListener implements ActionListener {
 		public void actionPerformed( ActionEvent e ) {
-			ManagerDAO managerDAO = new ManagerDAO();
-			managerDAO.addDate();
-			lblCurrentDate_DB.setText(managerDAO.getDate(1).toString());
-			managerDAO.payInterestOnSavingsAccount();
-			managerDAO.chargeInterstOnloans();
-			managerDAO.closeConn();
+			setVisible(false);
 		}
 	}
-	
 }

@@ -15,6 +15,7 @@ import BankATMDAO.*;
 public class GUIDeposit extends GUIDepositOrWithdrawal {
 
 	private JButton btnDeposit;
+	private JButton btnClose;
 	
 	/**
 	 * Create the frame.
@@ -48,12 +49,12 @@ public class GUIDeposit extends GUIDepositOrWithdrawal {
 		lblDesc.setBounds(50, 65, 700, 60);
 		contentPane.add(lblDesc);
 		
-		btnBack = new JButton("Back");
-		BackListener bl = new BackListener();
-		btnBack.addActionListener(bl);
-		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnBack.setBounds(460, 460, 270, 60);
-		contentPane.add(btnBack);
+		btnClose = new JButton("Close");
+		CloseListener bl = new CloseListener();
+		btnClose.addActionListener(bl);
+		btnClose.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		btnClose.setBounds(460, 460, 270, 60);
+		contentPane.add(btnClose);
 		
 		btnDeposit = new JButton("Deposit");
 		DepositListener dl = new DepositListener();
@@ -231,9 +232,4 @@ public class GUIDeposit extends GUIDepositOrWithdrawal {
 		}
 	}
 	
-	class BackListener implements ActionListener {
-		public void actionPerformed( ActionEvent e ) {
-			setVisible(false);
-		}
-	}
 }

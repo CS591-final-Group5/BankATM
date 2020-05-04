@@ -41,7 +41,7 @@ public class GUICloseAccounts extends GUIInternalWindow {
 		setClosable(true);
 		setIconifiable(true);
 		
-		lblCreateANew = new JLabel("<html>\r\nOpen a new account.\r\n</html>");
+		lblCreateANew = new JLabel("<html>\r\nClose an account.\r\n</html>");
 		lblCreateANew.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCreateANew.setForeground(Color.RED);
 		lblCreateANew.setFont(new Font("Comic Sans MS", Font.PLAIN, 25));
@@ -50,21 +50,21 @@ public class GUICloseAccounts extends GUIInternalWindow {
 		
 		btGroup = new ButtonGroup();
 		
-		lblDesc = new JLabel("<html>\r\n- The system will generate a unique card ID for the new account<br>\r\n</html>");
+		lblDesc = new JLabel("<html>\r\n<br>\r\n</html>");
 		lblDesc.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDesc.setForeground(Color.DARK_GRAY);
 		lblDesc.setFont(new Font("Comic Sans MS", Font.PLAIN, 22));
 		lblDesc.setBounds(50, 65, 700, 60);
 		contentPane.add(lblDesc);
 		
-		btnBack = new JButton("Back");
+		btnBack = new JButton("Close window");
 		BackListener bl = new BackListener();
 		btnBack.addActionListener(bl);
 		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnBack.setBounds(460, 460, 270, 60);
 		contentPane.add(btnBack);
 		
-		btnClose = new JButton("Close");
+		btnClose = new JButton("Close account");
 		CloseListener cl = new CloseListener();
 		btnClose.addActionListener(cl);
 		btnClose.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));

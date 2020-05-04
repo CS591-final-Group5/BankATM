@@ -80,8 +80,8 @@ public class GUIOpenAccounts extends GUIInternalWindow {
 		lblDesc.setBounds(50, 65, 700, 60);
 		contentPane.add(lblDesc);
 		
-		btnBack = new JButton("Back");
-		BackListener bl = new BackListener();
+		btnBack = new JButton("Close");
+		CloseListener bl = new CloseListener();
 		btnBack.addActionListener(bl);
 		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnBack.setBounds(460, 460, 270, 60);
@@ -241,9 +241,4 @@ public class GUIOpenAccounts extends GUIInternalWindow {
 		}
 	}
 	
-	class BackListener implements ActionListener {
-		public void actionPerformed( ActionEvent e ) {
-			setVisible(false);
-		}
-	}
 }

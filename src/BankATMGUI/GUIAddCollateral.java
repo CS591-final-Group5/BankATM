@@ -45,7 +45,7 @@ public class GUIAddCollateral extends GUIInternalWindow {
 		contentPane.add(lblHeadline);
 		
 		JButton btnBack = new JButton("Back");
-		BackListener bl = new BackListener();
+		CloseListener bl = new CloseListener();
 		btnBack.addActionListener(bl);
 		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
 		btnBack.setBounds(459, 443, 270, 60);
@@ -145,12 +145,6 @@ public class GUIAddCollateral extends GUIInternalWindow {
 			v.add(c.getCid());
 			v.add(c.getDescription());
 			dtm.addRow(v);
-		}
-	}
-	
-	class BackListener implements ActionListener {
-		public void actionPerformed( ActionEvent e ) {
-			setVisible(false);
 		}
 	}
 	

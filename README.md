@@ -21,55 +21,71 @@ CAS CS591 P1: Object Oriented Software Principles and Design (in Java)
 
 ### Class Design
 
-Interface:  
--  ConvertCurrency
--  OpenOrCloseAccount
--  DailyReport
--  TradeStocks
--  RequestLoans
--  
+-  Main
 
-BankATMSystem:  
--  ***
+package: GUIBankATMCommon
+-  Accounts
+    -  CheckingAccounts
+    -  SavingsAccounts
+    -  SecuritiesAccounts
+-  Collaterals
+-  ConvertCurrency: Interface
+-  Currencies
+    -  CurrencyCNY
+    -  CurrencyRUB
+    -  CurrencyUSD
+-  Loans
+-  StockDeal
+-  Stocks
+-  Transactions
+-  Users
+    -  UserBankManager
+    -  UserCustomers
 
-Transactions  
+package: GUIBankATMDAO
+-  Database: base class
+    -  AccountDAO
+    -  CollateralDAO
+    -  ManagerDAO
+    -  StockDAO
+    -  TransactionsDAO
 
-Users:  
--  UserBankManager
--  UserCustomers  
-
-Accounts  
--  AccountsChecking
--  AccountsSavings  
-
-Currencies  
--  CurrencyUSD
--  CurrencyCNY
--  CurrencyRUB  
-
-Loans  
-
-GUIBankATM  
+package: GUIBankATMGUI  
 -  GUIHomepage
 -  GUIUserRegister
 -  GUIUserLogin
     -  GUIUserBankManagerLogin
     -  GUIUserCustomersLogin
--  GUIInternalWindow
-    -  GUIChangeBankSystemPassword
+-  GUIInternalWindow: base class
+    -  GUICustomerInterface
+    -  GUIManagerInterface
+    -  GUIManagerCheckUp
+    -  GUIChangeBankATMPassword
     -  GUIChangeCardsPassword
+    -  GUIChangeManagerPassword
+    -  GUIChangeDate: 
+    -  GUIGetCurrentDate: 
+    -  GUICheckProfit: manager
     -  GUIAddCollateral
     -  GUIDeleteCollateral
     -  GUICards (unfinished)
         -  GUIOpenAccounts
         -  GUICloseAccounts
-        -  GUI
+        -  GUIOpenSecuritiesAccounts
     -  GUIDepositOrWithdrawal
         -  GUIDeposit
         -  GUIWithdrawal
         -  GUILoans
     -  GUIDailyReport
+    -  GUIDisplayAllLoans
+    -  GUIDisplayTransactions
+    -  GUIDisplayAllTransactions
+    -  GUIRequestLoans
+    -  GUITransfer
+    -  GUIWithdrawal
     -  GUIStockMarket  
+    -  GUICreateStocks
+    -  GUIModifyStocksPrice
 
 
 ### Tips

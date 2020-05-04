@@ -48,12 +48,12 @@ public class GUIChangeBankATMPassword extends GUIInternalWindow {
 		passwordField_2.setBounds(300, 322, 290, 60);
 		contentPane.add(passwordField_2);
 		
-		JButton btnBack = new JButton("Back");
-		BackListener bl = new BackListener();
-		btnBack.addActionListener(bl);
-		btnBack.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-		btnBack.setBounds(459, 443, 270, 60);
-		contentPane.add(btnBack);
+		JButton btnClose = new JButton("Back");
+		CloseListener bl = new CloseListener();
+		btnClose.addActionListener(bl);
+		btnClose.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+		btnClose.setBounds(459, 443, 270, 60);
+		contentPane.add(btnClose);
 		
 		btnChange = new JButton("Change");
 		ChangeListener sil = new ChangeListener();
@@ -88,12 +88,6 @@ public class GUIChangeBankATMPassword extends GUIInternalWindow {
 		lblCurrentUsername.setFont(new Font("Consolas", Font.BOLD, 20));
 		lblCurrentUsername.setBounds(306, 119, 232, 40);
 		contentPane.add(lblCurrentUsername);
-	}
-
-	class BackListener implements ActionListener {
-		public void actionPerformed( ActionEvent e ) {
-			setVisible(false);
-		}
 	}
 	
 	class ChangeListener implements ActionListener {

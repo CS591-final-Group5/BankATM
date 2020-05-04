@@ -90,6 +90,8 @@ public class GUICustomersInterface extends JFrame {
 		mnCards.add(OpenSecuritiesAccount);
 		
 		JMenuItem mntmChangeCardsPassword = new JMenuItem("Change password of a card");
+		ChangeCardsPasswordListener ccpl = new ChangeCardsPasswordListener();
+		mntmChangeCardsPassword.addActionListener(ccpl);
 		mntmChangeCardsPassword.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/ChangeCardsPassword.png")));
 		mnCards.add(mntmChangeCardsPassword);
 		TransferListener tfl = new TransferListener();
@@ -137,6 +139,16 @@ public class GUICustomersInterface extends JFrame {
 		mntmOpenStockMarket.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/OpenStockMarket.png")));
 		mnStockMarket.add(mntmOpenStockMarket);
 		
+		JMenu mnDate = new JMenu("Date");
+		mnDate.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Date.png")));
+		menuBar.add(mnDate);
+		
+		JMenuItem mntmCurrentDate = new JMenuItem("Current date");
+		CurrentDateListener cdl = new CurrentDateListener();
+		mntmCurrentDate.addActionListener(cdl);
+		mntmCurrentDate.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/CurrentDate.png")));
+		mnDate.add(mntmCurrentDate);
+		
 		JMenu mnHelp = new JMenu("Help");
 		mnHelp.setIcon(new ImageIcon(GUICustomersInterface.class.getResource("/Icons/Help.png")));
 		menuBar.add(mnHelp);
@@ -150,6 +162,38 @@ public class GUICustomersInterface extends JFrame {
 		contentPane.add(desktopPane);
 		
 		setLocationRelativeTo(null);
+	}
+	
+	class ChangeCardsPasswordListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUIChangeCardsPassword frame = new GUIChangeCardsPassword(username);
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+	
+	class CurrentDateListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				JInternalFrame[] allJFrames = desktopPane.getAllFrames();
+				for (JInternalFrame jf: allJFrames) {
+					jf.setVisible(false);
+				}
+				GUIGetCurrentDate frame = new GUIGetCurrentDate();
+				frame.setVisible(true);
+				desktopPane.add(frame);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
 	}
 	
 	class OpenStockMarketListener implements ActionListener {
@@ -175,7 +219,7 @@ public class GUICustomersInterface extends JFrame {
 				for (JInternalFrame jf: allJFrames) {
 					jf.setVisible(false);
 				}
-				GUILoans frame = new GUILoans(username);
+				GUIRequestLoans frame = new GUIRequestLoans(username);
 				frame.setVisible(true);
 				desktopPane.add(frame);
 			} catch (Exception ex) {

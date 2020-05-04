@@ -54,9 +54,4 @@ public class GUICheckProfit extends GUIInternalWindow {
 		managerDAO.closeConn();
 	}
 	
-	class CloseListener implements ActionListener {
-		public void actionPerformed( ActionEvent e ) {
-			setVisible(false);
-		}
-	}
 }
