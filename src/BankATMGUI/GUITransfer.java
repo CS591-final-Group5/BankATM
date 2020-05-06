@@ -323,12 +323,12 @@ public class GUITransfer extends GUIInternalWindow {
 					accountDAO.closeConn();
 					return;
 				}
-				if (accountDAO.getAllBalanceOfSavings(username) < SavingsAccounts.MINSUM) {
+				if (accountDAO.getAllBalanceOfSavings(username) - amount < SavingsAccounts.MINSUM) {
 					JOptionPane.showMessageDialog(null, "The sum of balance of all your savings "
-							+ "accounts can't be less than " + SavingsAccounts.MINSUM + "!");
+							+ "accounts can't be less than " + SavingsAccounts.MINSUM + "$!");
 					accountDAO.closeConn();
 					return;
-				}
+				}	
 				Transactions transaction = new Transactions(username, "", accountNumber_up, 
 						null, null, Transactions.TYPE_4, accountNumber_down, amount);
 				if (accountDAO.depositMoney(accountNumber_up, -amount, transaction) && 
