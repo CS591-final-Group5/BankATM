@@ -240,6 +240,13 @@ public class GUIOpenSecuritiesAccounts extends GUIInternalWindow {
 					accountDAO.closeConn();
 					return;
 				}
+				if (accountDAO.getAllBalanceOfSavings(username) - amount <= SavingsAccounts.MINSUM) {
+					JOptionPane.showMessageDialog(null, "The sum of balance of all savings"
+							+ " account should be no less than 2500.0$!", 
+							"ERROR OCCURS", JOptionPane.ERROR_MESSAGE);
+					accountDAO.closeConn();
+					return;
+				}
 				String newID = accountDAO.openNewAccount(username, accountType, strPassword_1);
 				Transactions transaction = new Transactions(username, "", accountNumber, 
 						null, null, Transactions.TYPE_4, newID, amount);
